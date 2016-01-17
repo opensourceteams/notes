@@ -1,0 +1,23 @@
+scala-安装-01.txt
+
+准备资源
+-------------------------------------------------------
+scala-2.11.7.msi
+window
+
+安装
+-------------------------------------------------------
+1.双击scala-2.11.7.msi安装，将scala 安装到 D:\modules\environment\scala
+2.设置环境变量 
+				set SCALA_HOME=D:\modules\environment\scala
+				set PATH=%SCALA_HOME%\bin;%PATH%；
+3.打开cmd 命令，输入:
+				scala -version
+
+				安装成功会有提示
+				C:\Users\think>scala -version
+				Scala code runner version 2.11.7 -- Copyright 2002-2013, LAMP/EPFL
+4.退出
+	:quit	
+5.帮助
+	:help				

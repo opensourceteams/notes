@@ -1,0 +1,12 @@
+关闭防火墙.txt
+
+显示程序版本并退出
+		sudo ufw --version
+		
+停止防火墙，禁止开机启动
+		sudo ufw  disable
+重启防火墙
+		sudo ufw reload    
+
+重启防火墙，设置为开机启动
+		sudo ufw enable		

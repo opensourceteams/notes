@@ -1,0 +1,82 @@
+maven-scala2.10.6-打包项目-项目可以包含java和scala程序.txt
+
+
+pom.xml
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+说明，需要指明客户端用的hadoop 的版本  apache.hadoop-client.version  即  用的hadoop的版本号
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>yjmyzz</groupId>
+    <artifactId>${project.name}</artifactId>
+    <version>1.0</version>
+
+    <dependencies>
+<!--        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-compiler</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-reflect</artifactId>
+            <version>${scala.version}</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.12</version>
+        </dependency>
+
+                <dependency>
+                    <groupId>org.apache.spark</groupId>
+                    <artifactId>spark-core_2.10</artifactId>
+                    <version>${apache.spark-core.version}</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.apache.hadoop</groupId>
+                    <artifactId>hadoop-client</artifactId>
+                    <version>${apache.hadoop-client.version}</version>
+                </dependency>
+
+
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>2.15.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <properties>
+        <project.name>Spark1.6.0-practice-maven</project.name>
+        <scala.version>2.10.6</scala.version>
+        <apache.spark-core.version>1.6.0</apache.spark-core.version>
+        <apache.hadoop-client.version>2.6.0</apache.hadoop-client.version>
+
+    </properties>
+</project>

@@ -1,0 +1,38 @@
+HADOOP_HOME 这样的环境变量是不需要的
+查看文件目录结构信息
+bin/hadoop dfs -ls /
+bin/hadoop fs -ls /
+(查看文件目录结构信息,递归)
+bin/hadoop  fs -ls -R /
+
+查看文件内容信息
+bin/hadoop dfs -cat  /bigdata/examples/hadoop/hadoop1/wordcount/input/file01
+
+创建目录
+hadoop fs -mkdir /user
+hadoop fs -mkdir -p /bigdata/examples/hadoop/hadoop2/input/ncdc/all
+
+上传文件
+bin/hadoop fs -put  /mnt/hgfs/downloads/hadoop/ncdc_data/19*.gz    /user/ncdc_data/
+
+从本地文件系统将一个文件复制到HDFS
+hadoop fs -copyFromLocal   input/docs/quangle.txt   hdfs://localhost/user/tom/quangle.txt
+
+为示hdfs块信息
+hadoop  fsck /  -files   -blocks
+
+
+
+
+启动方式
+ 1.sbin/start-all.sh   配置文件目录为  /etc/hadoop
+ 2.设置环境变量  
+     HADOOP_CONF_DIR=/home/hadoop/hadoop-2.7.1/etc/hadoop_clutser   
+     sbin/start-all.sh 
+
+     或者  sbin/start-all.sh  --config /home/hadoop/hadoop-2.7.1/etc/hadoop_clutser 
+ 3.符号链接实现配置分离  
+	 ln -s hadoop_clutser hadoop         
+	 sbin/start-all.sh 
+
+

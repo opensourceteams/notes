@@ -1,0 +1,38 @@
+Habase  数据库
+---------------------
+1.面向列(column family)的数据库
+2.基于内存的
+
+
+Habase  数据库 完全分布式配置
+---------------------
+     1.配置hdfs文件系统、分布式开关、zookeeper节点
+       ${habase_home}/conf/hbase-site.xml
+
+		    <configuration>
+		      <property>
+		        <name>hbase.rootdir</name>
+		        <value>hdfs://namenode.example.org:8020/hbase</value>
+		      </property>
+		      <property>
+		        <name>hbase.cluster.distributed</name>
+		        <value>true</value>
+		      </property>
+		      <property>
+		        <name>hbase.zookeeper.quorum</name>
+		        <value>S4,S5,S6</value>
+		      </property>
+		    </configuration>
+
+	 2.配置区域服务器列表
+	   ${habase_home}/conf/regionservers
+	   S4
+	   S5
+	   S6
+	 3.配置hbase备份管理员主机   
+	   ${habase_home}/conf/backup-masters
+	   S4
+	 4.启动
+	    先启动  hadoop   start-all.sh
+	    再启动  hbase   start-hbase.sh 	    
+

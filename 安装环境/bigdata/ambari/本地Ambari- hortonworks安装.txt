@@ -1,0 +1,16 @@
+本地Ambari- hortonworks安装.txt
+
+本地 hortonworks安装，资源库从本地服务器下载（http://zh.hortonworks.com/hdp/downloads/）
+--------------------------------------------  
+1.下载软件包
+  ambari-2.1.0-centos7.tar.gz
+  HDP-2.3.0.0-centos7-rpm.tar.gz
+  HDP-UTILS-1.1.0.20-centos7.tar.gz
+2.在局域网搭建web服务器
+  安装好tomcat
+3.解压各软件包到 ${TOMCAT_HOME}/webapps/ROOT/     
+4.修改各软件库中的  *.repo  把地址改成本的tomcat访问地址，注意访问路径是否正确，需要验证每一个url地址
+5.启动tomcat 服务器
+6.复制ambari.repo文件到ambari server主机 /etc/yum.repo.d/ 目录下
+
+说明：yum repolist 查看窗库列表

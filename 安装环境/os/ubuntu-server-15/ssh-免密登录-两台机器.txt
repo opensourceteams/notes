@@ -1,0 +1,78 @@
+ssh-免密登录-两台机器.txt
+
+#!/bin/bash
+#安装远程本机ssh免密登录本机
+rm -rf ~/.ssh
+ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
+cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+＃以上不能重复执行
+＃----------------------------------------------------------------------------
+
+＃以下可以用做循环体
+＃----------------------------------------------------------------------------
+TEMP_REMOTE_DIR=~/temp/id_dsa_dir
+TEMP_S=s1
+#安装远程本机ssh免密登录远程本机
+sshpass -p hadoop ssh  $TEMP_S "rm -rf ~/.ssh"
+sshpass -p hadoop ssh  $TEMP_S  "ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa"
+sshpass -p hadoop ssh  $TEMP_S  "cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys"
+
+#安装本机ssh免密登录远程机
+sshpass -p hadoop ssh  $TEMP_S  "rm -rf $TEMP_REMOTE_DIR"
+sshpass -p hadoop ssh  $TEMP_S  "mkdir -p $TEMP_REMOTE_DIR"
+sshpass -p hadoop scp -r ~/.ssh/id_dsa.pub   $TEMP_S :$TEMP_REMOTE_DIR
+sshpass -p hadoop ssh  $TEMP_S  "cat ${TEMP_REMOTE_DIR}/id_dsa.pub >> ~/.ssh/authorized_keys"
+
+
+
+
+
+
+
+
+--------------------
+#!/bin/bash
+#安装远程本机ssh免密登录本机
+rm -rf ~/.ssh
+ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
+cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+
+
+TEMP_S=192.168.0.112
+TEMP_REMOTE_DIR=~/temp/id_dsa_dir
+#安装远程本机ssh免密登录远程本机
+ssh  $TEMP_S rm -rf ~/.ssh
+ssh  $TEMP_S "ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa"
+ssh  $TEMP_S  "cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys"
+
+
+#安装本机ssh免密登录远程机
+ssh  $TEMP_S rm -rf $TEMP_REMOTE_DIR
+ssh  $TEMP_S "mkdir -p $TEMP_REMOTE_DIR"
+scp -r ~/.ssh/id_dsa.pub   $TEMP_S:$TEMP_REMOTE_DIR
+ssh  $TEMP_S "cat ${TEMP_REMOTE_DIR}/id_dsa.pub >> ~/.ssh/authorized_keys"
+
+
+
+
+
+#!/bin/bash
+#安装远程本机ssh免密登录本机
+rm -rf ~/.ssh
+ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
+cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+
+
+TEMP_S=192.168.0.112
+TEMP_REMOTE_DIR=~/temp/id_dsa_dir
+#安装远程本机ssh免密登录远程本机
+ssh  $TEMP_S rm -rf ~/.ssh
+ssh  $TEMP_S "ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa"
+ssh  $TEMP_S  "cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys"
+
+
+#安装本机ssh免密登录远程机
+ssh  $TEMP_S rm -rf $TEMP_REMOTE_DIR
+ssh  $TEMP_S "mkdir -p $TEMP_REMOTE_DIR"
+scp -r ~/.ssh/id_dsa.pub   $TEMP_S:$TEMP_REMOTE_DIR
+ssh  $TEMP_S "cat ${TEMP_REMOTE_DIR}/id_dsa.pub >> ~/.ssh/authorized_keys"

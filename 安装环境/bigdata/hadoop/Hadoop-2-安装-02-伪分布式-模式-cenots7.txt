@@ -1,0 +1,94 @@
+hadoop 2 伪分布式  模式  安装
+
+一、准备环境
+
+1. 操做系统centos7
+2.hadoop-2.7.1.tar.gz
+3.jdk java version "1.8.0_40"
+
+二、配置文件
+   1.解压 hadoop-2.7.1.tar.gz
+   cd /opt/modules/bigdata/hadoop
+   tar zxvf hadoop-2.7.1.tar.gz 
+   cp -r /home/hadoop/hadoop-2.7.1/etc/hadoop    /home/hadoop/hadoop-2.7.1/etc/hadoop-pseudo
+   2.配置 etc/hadoop/hadoop-env.sh
+     export JAVA_HOME=/opt/modules/jdk/jdk1.8.0_40
+     export HADOOP_CONF_DIR=/home/hadoop/hadoop-2.7.1/etc/hadoop-pseudo
+   3.etc/hadoop-pseudo/core-site.xml
+        <configuration>
+            <property>
+                <name>fs.defaultFS</name>
+                <value>hdfs://localhost:9000</value>
+            </property>
+        </configuration>  
+   4.etc/hadoop-pseudo/hdfs-site.xml
+      <configuration>
+          <property>
+              <name>dfs.replication</name>
+              <value>1</value>
+          </property>
+      </configuration>
+   5.ssh localhost 不用输入密码
+      $ ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
+      $ cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys 
+      chmod 700 ~/.ssh 
+      chmod 600 ~/.ssh/authorized_keys 
+
+      chmod 755 /home/A
+      (如果不是root用户，是另外的用户例如A，则key文件在/home/A/.ssh中，/home/A 这个文件夹的权限改为755   chmod 755 /home/A)
+
+      vi /etc/ssh/sshd_config
+      找到以下内容，并去掉注释符”#“
+      RSAAuthentication yes
+      PubkeyAuthentication yes
+      AuthorizedKeysFile      .ssh/authorized_keys
+
+      (node1 免密码登录 node2
+         在node2机器上执行：
+         scp node1:~/.ssh/id_dsa.pub ~/temp/id_dsa.node1.pub
+         cat ~/temp/id_dsa.node1.pub >> ~/.ssh/authorized_keys
+      ) 
+     6.格式化:
+       bin/hdfs namenode -format
+     7.启动 hdfs
+       sbin/start-dfs.sh     停止 hdfs   sbin/stop-dfs.sh
+     8.浏览器查看hadoop监控管理界面
+        NameNode - http://localhost:50070/
+     9.执行示例  
+       1):新建目录
+         $ bin/hdfs dfs -mkdir /user
+         $ bin/hdfs dfs -mkdir /user/hadoop
+       2):复制本地目录到hdfs 中
+         $ bin/hdfs dfs -put etc/hadoop input
+       3):运行示例
+           $ bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar grep input output 'dfs[a-z.]+'
+       4):输出结果
+         $ bin/hdfs dfs -get output output
+         $ cat output/*    
+
+         or ( $ bin/hdfs dfs -cat output/*)
+      10.停止hdfs
+         sbin/stop-dfs.sh
+
+三、YARN单节点配置
+    1):etc/hadoop-pseudo/mapred-site.xml
+        <configuration>
+            <property>
+                <name>mapreduce.framework.name</name>
+                <value>yarn</value>
+            </property>
+        </configuration>  
+     2):etc/hadoop-pseudo/yarn-site.xml:        
+        <configuration>
+            <property>
+                <name>yarn.nodemanager.aux-services</name>
+                <value>mapreduce_shuffle</value>
+            </property>
+        </configuration>
+      3):启动YARN
+         sbin/start-yarn.sh
+         资源管理界面： http://localhost:8088/
+      4):停止YARN
+         sbin/stop-yarn.sh       
+
+

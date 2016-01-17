@@ -1,0 +1,17 @@
+spark-安装
+
+1.预编译
+     ../spark-1.5.2-bin-hadoop2.6.tgz
+     1.解压软件包 tar -zxvf spark-1.5.2-bin-hadoop2.6.tgz  -C /opt/modules/bigdata/spark/   $SPARK_HOME=/opt/modules/bigdata/spark/spark-1.5.2-bin-hadoop2.6
+     2.ln -s /opt/modules/bigdata/spark/spark-1.5.2-bin-hadoop2.6    /home/hadoop/spark-1.5.2-bin-hadoop2.6
+     3.本地测试  $SPARK_HOME/spark-shell 或  $SPARK_HOME/spark-shell local[4] 
+     4.体验:准备文件
+     5.scala> 中每输入一行按回车
+      		   var file = sc.textFile("/home/hadoop/temp/aa.txt")
+      		   #统计行数
+      		   file.count   
+      		   #第一行数据
+      		   file.first
+      		   #统计字符串one的个数
+      		   file.filter(l => l.contains("one"))
+

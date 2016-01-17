@@ -1,0 +1,39 @@
+Hbase-1.0.2-安装-01-单机-centos7.txt
+1.解压hbase-1.0.2-bin.tar.gz 到 /opt/modules/bigdata/hbase/  即 HBASE_HOME=/opt/modules/bigdata/hbase/hbase-1.0.2
+2.修改配置文件
+  	$HBASE_HOME/conf/hbase-site.xml
+		<?xml version="1.0"?>
+		<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+		<configuration>
+		  <property>
+		    <name>hbase.rootdir</name>
+		    <value>file:///tmp/hbase</value>
+		  </property>
+
+		</configuration>
+3.设置java环境变量
+	$HBASE_HOME/conf/hbase-env.sh
+		export JAVA_HOME=/opt/modules/jdk/jdk1.8.0_40
+4.启动 HBase
+	$HBASE_HOME/bin/start-hbase.sh	
+	starting Master, logging to logs/hbase-user-master-example.org.out
+5.用shell连接你的HBase
+ 	$HBASE_HOME/bin/hbase shell		
+ 	创建表:
+ 		create 'test', 'cf'		
+ 	插入数据:
+	 	put 'test', 'row1', 'cf:a', 'value1'
+	 	put 'test', 'row2', 'cf:b', 'value2'
+	 	put 'test', 'row3', 'cf:c', 'value3'	
+	检查插入数据:
+		scan 'test'
+	Get一行，操作如下
+		get 'test', 'row1'
+	disable 再 drop 这张表，可以清除你刚刚的操作
+		disable 'test
+		drop 'test'
+	关闭shell
+		exit
+6.停止 HBase		
+	$HBASE_HOME/bin/stop-hbase.sh			
+		

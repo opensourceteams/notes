@@ -1,0 +1,44 @@
+Install Ambari 2.1.2 from Public Repositories
+Install Ambari 2.1.2 from Public Repositories
+Step1: Download the Ambari repository on the Ambari Server host
+For Redhat/CentOS/Oracle:
+  cd /etc/yum.repos.d/
+  wget <ambari-repo-url>
+ 
+For SUSE:
+  cd /etc/zypp/repos.d
+  wget <ambari-repo-url>
+ 
+For Ubuntu/Debian:
+  cd /etc/apt/sources.list.d
+  wget <ambari-repo-url>
+Choose an appropriate <ambari-repo-url> based on the platform used:
+(Redhat / CentOS / Oracle) 6
+http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.1.2/ambari.repo
+(Redhat / CentOS / Oracle) 7
+http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.1.2/ambari.repo
+SUSE 11
+http://public-repo-1.hortonworks.com/ambari/suse11/2.x/updates/2.1.2/ambari.repo
+Ubuntu 12	http://public-repo-1.hortonworks.com/ambari/ubuntu12/2.x/updates/2.1.2/ambari.list 
+Ubuntu 14	http://public-repo-1.hortonworks.com/ambari/ubuntu14/2.x/updates/2.1.2/ambari.list
+Debian 7	http://public-repo-1.hortonworks.com/ambari/debian7/2.x/updates/2.1.2/ambari.list
+Step 2: Install, Setup, and Start Ambari Server
+Install Ambari Server from the public Ambari repository:
+For Redhat/CentOS/Oracle:
+  yum install ambari-server
+ 
+For SUSE:
+  zypper install ambari-server
+ 
+For Ubuntu/Debian:
+  apt-key adv --recv-keys --keyserver keyserver.ubuntu.com B9733A7A07513CAD
+  apt-get update
+  apt-get install ambari-server
+Run the setup command to configure your Ambari Server, Database, JDK, LDAP, and other options:
+ambari-server setup
+ 
+Start Ambari Server:
+ambari-server start
+Step 3: Deploy Cluster using Ambari Web UI
+Open up a web browser and go to http://<ambari-server-host>:8080.
+Log in with username admin and password admin and follow on-screen instructions.

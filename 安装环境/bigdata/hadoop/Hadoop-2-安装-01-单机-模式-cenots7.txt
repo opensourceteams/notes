@@ -1,0 +1,21 @@
+hadoop 2 单机  模式  安装
+
+一、准备环境
+
+1. 操做系统centos7
+2.hadoop-2.7.1.tar.gz
+3.jdk java version "1.8.0_40"
+
+二、配置文悠扬
+   1.解压 hadoop-2.7.1.tar.gz
+   cd /opt/modules/bigdata/hadoop
+   tar zxvf hadoop-2.7.1.tar.gz 
+   2.配置 etc/hadoop/hadoop-env.sh
+     export JAVA_HOME=/opt/modules/jdk/jdk1.8.0_40
+   3.查看hadoop 的版本信息 bin/hadoop version    
+   4.示例:
+     $ mkdir input
+	  $ cp etc/hadoop/*.xml input
+	  $ bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar grep input output 'dfs[a-z.]+'
+	  $ cat output/*
+

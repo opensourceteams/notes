@@ -1,0 +1,57 @@
+bigdata-命令-02.txt
+
+
+清空/temp/* 目录
+/home/hadoop/shell/batch/bigdata/delete-tmp.sh(一般不需要清理)
+清空日志
+/home/hadoop/shell/batch/bigdata/delete-logs.sh
+
+hadoop
+------------------------------------------------------------------------------------------------------------------
+安使化集群，同步集群，安装包，到安装前（前提先配好一台）
+	/home/hadoop/shell/batch/hadoop/hadoop_init.sh
+
+同步集群配置文件
+	/home/hadoop/shell/batch/hadoop/scp-hadoop-ect.sh
+
+
+查看dfs目录结构
+	/opt/modules/bigdata/hadoop/hadoop-2.6.0/bin/hadoop fs -ls -R /
+上传文件到dfs(先将文件传到服务器上的普通目录下，再传到dfs目录)
+	/opt/modules/bigdata/hadoop/hadoop-2.6.0/bin/hadoop fs -put ~/temp/wordCount.txt /library/wordcount/input/Data/	
+查看文件内容信息
+	/opt/modules/bigdata/hadoop/hadoop-2.6.0/hadoop dfs -cat  /bigdata/examples/hadoop/hadoop1/wordcount/input/file01
+
+
+	
+格式化
+	/opt/modules/bigdata/hadoop/hadoop-2.6.0/bin/hdfs namenode -format
+启动
+	/opt/modules/bigdata/hadoop/hadoop-2.6.0/sbin/start-all.sh
+	或者
+	/opt/modules/bigdata/hadoop/hadoop-2.6.0/sbin/start-dfs.sh
+	/opt/modules/bigdata/hadoop/hadoop-2.6.0/sbin/start-yarn.sh
+停止
+	/opt/modules/bigdata/hadoop/hadoop-2.6.0/sbin/stop-all.shell
+	或者
+		/opt/modules/bigdata/hadoop/hadoop-2.6.0/sbin/stop-dfs.sh
+		/opt/modules/bigdata/hadoop/hadoop-2.6.0/sbin/stop-yarn.sh
+
+
+
+spark
+------------------------------------------------------------------------------------------------------------------		
+     ).同步spark配置文件
+           /home/hadoop/shell/batch/spark/scp-spark-conf.sh
+
+     ).spark-shell
+             	/opt/modules/bigdata/spark/spark-1.6.0-bin-hadoop2.6/bin/spark-shell  --master spark://S20:7077  
+             	http://S20:4040 
+
+	 ).启动spark  /opt/modules/bigdata/spark/spark-1.6.0-bin-hadoop2.6/sbin/start-all.sh
+	 ).关闭spark  /opt/modules/bigdata/spark/spark-1.6.0-bin-hadoop2.6/sbin/stop-all.sh
+
+	 ).启动历史记录服务  /opt/modules/bigdata/spark/spark-1.6.0-bin-hadoop2.6/sbin/start-history-server.sh
+	 ).关闭历史记录服务  /opt/modules/bigdata/spark/spark-1.6.0-bin-hadoop2.6/sbin/stop-history-server.sh
+	 ).访问  http://S20:18080  
+	 ).访问  http://S20:8080

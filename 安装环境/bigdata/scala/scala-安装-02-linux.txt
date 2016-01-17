@@ -1,0 +1,37 @@
+scala-安装-02.txt
+
+准备资源
+-------------------------------------------------------
+scala-2.11.7.tgz
+ubuntu
+
+安装
+-------------------------------------------------------
+1.解压软件包
+	cd   /opt/modules/scala
+	tar -zxvf scala-2.11.7.tgz     $SCALA_HOME=/opt/modules/scala/scala-2.11.7
+
+2.设置环境变量 
+				export SCALA_HOME=/opt/modules/scala/scala-2.11.7
+				export PATH=$SCALA_HOME\bin:$PATH%:
+3.打开cmd 命令，输入:
+				scala -version
+
+				安装成功会有提示
+				hadoop@S23:/opt/modules/scala/scala-2.11.7/bin$ scala
+				Welcome to Scala version 2.11.7 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_65).
+				Type in expressions to have them evaluated.
+				Type :help for more information.
+
+				scala> 
+4.退出
+	:quit	
+5.帮助
+	:help	
+
+安装 开发工具 eclipse增加scala插件
+-------------------------------------------------------	
+1.解压 eclipse 
+2.eclipse-plugin-scala-update-site.zip( features ,plugins) 解压至eclipse插件目录 ( features ,plugins),重启eclipse 有时不能新建scala项目就执行步骤3
+3.eclipse在线安装插件  http://download.scala-ide.org/sdk/lithium/e44/scala211/stable/site  重启eclipse
+4.设置eclipse验证，有些语法是正确的，eclipse老验证不通过，  validation  只选 DTD ,HTML,XML Validator,XML Schema Validator 设置完成后，重启eclipse

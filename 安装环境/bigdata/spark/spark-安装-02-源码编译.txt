@@ -1,0 +1,19 @@
+spark-安装-02-源码编译.txt
+
+一、安装maven
+-----------------------------
+	1.安装maven  tar -zxvf /opt/modules/apache/maven/apache-maven-3.3.9-bin.tar.gz  -C  /opt/modules/apache/maven/   即:$MAVEN_HOME=/opt/modules/apache/maven//opt/modules/apache/maven/apache-maven-3.3.9
+	2.设置环境变量 
+		#设置MAVEN
+		export MAVEN_HOME=/opt/modules/apache/maven/apache-maven-3.3.9
+		# PATH 汇总
+		export PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
+	3.验证maven安装  mvn -v  会输出mavne的版本信息	
+
+二、用maven安装spark
+-----------------------------	
+        
+	1. 解压软件包  tar -zxvf spark-1.6.0.tgz -C /opt/modules/bigdata/spark  即  $SPARK_HOME=/opt/modules/bigdata/spark/spark-1.6.0
+	2. cd  $SPARK_HOME
+	3.防止maven内溢出:export MAVEN_OPTS="-Xms256m -Xmx512m"
+	4.执行 apaven安装   mvn -Dhadoop.version=2.7.1 -Phadoop-2.6 -DskipTests clean package

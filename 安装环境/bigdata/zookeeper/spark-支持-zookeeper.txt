@@ -1,0 +1,10 @@
+spark-支持-zookeeper.txt
+
+-------------------------------------------------------
+$SPARK_HOME/conf/spark-en.sh 修改
+
+export SPARK_DAEMON_JAVA_OPTS="-Dspark.deploy.recoveryMode=ZOOKEEPER -Dspark.deply.zookeeper.url=Master:2181,Worker1:2181,Word2:2181 -Dspark.deploy.zookeeper.dir=/spark"
+
+
+
+./spark-shell --master --master,word1:7077,word2:7077,word3:7077

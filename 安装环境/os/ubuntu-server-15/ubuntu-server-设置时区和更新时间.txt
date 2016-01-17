@@ -1,0 +1,16 @@
+ubuntu-server-设置时区和更新时间.txt
+
+一、运行tzselect
+查了一下时区：
+1.date -R   
+不是东8区  Tue, 12 Jan 2016 05:55:19 -0800
+
+2.sudo tzselect
+
+3.选择亚洲 Asia，确认之后选择中国（China)，最后选择北京(Beijing)  
+4.sudo cp /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime
+5.更新时间 先安装  apt-get install ntpdate  -Y   再    sudo ntpdate time.windows.com
+6.date -R 查看时间  Tue, 12 Jan 2016 21:57:43 +0800
+7.将系统时间写入硬件时间(看到的日期和机器的日期一样) 
+	硬件时间和系统时间的同步，重新启动系统，硬件时间会读取系统时间，实现同步，但是在不重新启动的时候，需要用hwclock命令实现同步。
+	sudo hwclock --systohc

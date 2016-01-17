@@ -1,0 +1,30 @@
+ubuntu-server-15-64位-静态IP设置
+
+ifqueyr -l 
+
+sudo ifup -a
+
+
+静态ip设置
+-----------------------------------------
+sudo vi /etc/network/interfaces
+
+auto lo
+iface lo inet loopback
+
+auto eno16777736
+iface eno16777736 inet static
+address 192.168.120.1
+netmask 255.255.255.0
+gateway 192.168.0.1
+
+域名设置
+-----------------------------------------
+sudo  vi /etc/resolvconf/resolv.conf.d/base
+nameserver 192.168.0.1
+nameserver 202.106.46.151
+nameserver 202.106.195.68
+
+重启网络
+-----------------------------------------
+sudo /etc/init.d/networking restart

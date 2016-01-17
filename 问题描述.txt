@@ -1,0 +1,6 @@
+﻿问题描述1：
+在hadoop集群中  S0  namenode 机器上安装了eclipse ,然后运行最高所温的示例， 输入路径写死/user/ncdc/all/1901-short
+
+S0 机器上   gdfs 上没有目录 /user/ncdc/all/1901-short  但是 dfs 上有/user/ncdc/all/1901-short
+根据输出错误信息，说本地 /user/ncdc/all/1901-short 不存在，我想知道，为什么找的输入路径是  gdfs上的路径，而不是dfs上
+的路径。

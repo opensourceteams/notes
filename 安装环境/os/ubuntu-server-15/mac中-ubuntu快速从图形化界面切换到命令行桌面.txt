@@ -1,0 +1,5 @@
+mac中-ubuntu快速从图形化界面切换到命令行桌面.txt
+
+
+fn + control + option + F1到F6  切换到命令行界面
+fn + control + option + F7      切换到图开化界面

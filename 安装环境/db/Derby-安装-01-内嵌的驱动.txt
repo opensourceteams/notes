@@ -1,0 +1,37 @@
+Derby-安装-01.txt   (Run SQL using the embedded driver)
+
+下载资源
+-----------------------
+jdk
+db-derby-10.12.1.1-bin.tar.gz  
+
+
+
+安装
+-----------------------
+1.解压 tar   db-derby-10.12.1.1-bin.tar.gz  -C  /opt/modules/db/derby/db-derby-10.12.1.1-bin/  $DERBY_HOME=/opt/modules/db/derby/db-derby-10.12.1.1-bin
+2.设置环境变量 
+		export DERBY_HOME=/opt/modules/db/derby/db-derby-10.12.1.1-bin
+		export PATH=$DERBY_HOME/bin:$PATH
+		expport  CLASSPATH=${DERBY_HOME}/lib/derby.jar:${DERBY_HOME}/lib/derbytools.jar:${DERBY_HOME}/lib/derbyoptionaltools.jar:${CLASSPATH}
+3.java -jar $DERBY_HOME/lib/derbyrun.jar sysinfo
+5.cd /Users/hadoop/workspace/temp/a/DERBYTUTOR       cp $DERBY_HOME/demo/programs/toursdb/*.sql .
+6.java -jar $DERBY_HOME/lib/derbyrun.jar ij
+7.创建库 
+		CONNECT 'jdbc:derby:firstdb;create=true';
+8.创建表
+		CREATE TABLE FIRSTTABLE(ID INT PRIMARY KEY,NAME VARCHAR(12));
+9.插入数据
+		INSERT INTO FIRSTTABLE VALUES (10,'TEN'),(20,'TWENTY'),(30,'THIRTY');	
+10.查询数据
+		SELECT * FROM FIRSTTABLE;
+11.查询数据（带条件）					
+		SELECT * FROM FIRSTTABLE WHERE ID=20;
+12.运行脚本
+		run 'ToursDB_schema.sql';		
+		run 'loadTables.sql';
+13.退出ij工具
+		exit;
+14.查看日志 
+		cat /Users/hadoop/workspace/temp/a/DERBYTUTOR/derby.log			
+

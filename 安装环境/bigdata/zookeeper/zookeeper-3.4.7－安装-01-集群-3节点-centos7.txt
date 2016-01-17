@@ -1,0 +1,64 @@
+zookeeper-3.4.7－安装-centos7.txt
+S1,S2,S3 三台服务器
+
+1.各机器解压文件  zookeeper-3.4.7.tar.gz 到 /opt/modules/bigdata/zookeeper/目录下  ZOOKEEPER_HOME=/opt/modules/bigdata/zookeeper/zookeeper-3.4.7
+2.设置好JAVA环境变量
+3.配置文件 /zookeeper-3.4.7/conf/zoo.cfg
+   # The number of milliseconds of each tick
+	tickTime=2000
+	# The number of ticks that the initial
+	# synchronization phase can take
+	initLimit=10
+	# The number of ticks that can pass between
+	# sending a request and getting an acknowledgement
+	syncLimit=5
+	# the directory where the snapshot is stored.
+	# do not use /tmp for storage, /tmp here is just
+	# example sakes.
+	dataDir=/tmp/zookeeper
+	# the port at which the clients will connect
+	clientPort=2181
+	# the maximum number of client connections.
+	# increase this if you need to handle more clients
+	#maxClientCnxns=60
+	#
+	# Be sure to read the maintenance section of the
+	# administrator guide before turning on autopurge.
+	#
+	# http://zookeeper.apache.org/doc/current/zookeeperAdmin.html#sc_maintenance
+	#
+	# The number of snapshots to retain in dataDir
+	#autopurge.snapRetainCount=3
+	# Purge task interval in hours
+	# Set to "0" to disable auto purge feature
+	#autopurge.purgeInterval=1
+
+	dataDir=$ZOOKEEPER_HOME/data
+	dataLogDir=$ZOOKEEPER_HOME/logs
+
+
+	server.11=S1:2888:3888
+	server.12=S2:2888:3888
+	server.13=S3:2888:3888
+---------------------------------------------
+4.配置 $ZOOKEEPER_HOME/data/zookeeper/myid  先建文件
+  S1: $ZOOKEEPER_HOME/data/zookeeper/myid    值为11
+  S2: $ZOOKEEPER_HOME/data/zookeeper/myid    值为12
+  S3: $ZOOKEEPER_HOME/data/zookeeper/myid    值为13
+
+5. 命令
+	启动：/zookeeper-3.4.7/bin/zkServer.sh start
+	停止：/zookeeper-3.4.7/bin/zkServer.sh stop
+    查看状态：/zookeeper-3.4.7/bin/zkServer.sh status
+6.zookeeper 节点数量的选择为，奇数台，因为，zookeeper判断岩机节点数 >=  n/2 +1 时就停止运行。
+7.zookeeper 命令，客户端操作数据
+	1.客户端连接服务器
+	   $ZOOKEEPER_HOME/bin/zkCli.sh -server S1
+	2.查看目录  ls /
+	3.创建目录和数据  create /root  hellozk
+	4.得到数据 get /root
+	5.更新数据  set /root /hellozk2cccdsaaqw3
+	6.不显示子节点信息：stat /root
+	7.断开连接 close
+	8.重新连接 connect S2:2181 
+	9.退出 quit

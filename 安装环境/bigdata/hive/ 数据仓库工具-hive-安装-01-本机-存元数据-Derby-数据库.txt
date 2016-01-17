@@ -1,0 +1,65 @@
+ 数据仓库工具-hive-安装-01-本机-存元数据-Derby-数据库.txt
+
+参考手册（https://cwiki.apache.org/confluence/display/Hive/LanguageManual）
+
+一、准备软件
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+1.安装好hadoop环境，并启动了hadoop
+2.下载hive安装包  apache-hive-1.2.1-bin.tar.gz
+
+二、开始安装
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+1.解压软件包 tar apache-hive-1.2.1-bin.tar.gz  -C  /opt/modules/bigdata/hive/  即 $HIVE_HOME=/opt/modules/bigdata/hive/apache-hive-1.2.1-bin
+2.设置环境变量
+     export HADOOP_HOME=/opt/modules/bigdata/hadoop/hadoop-2.7.1
+     export HIVE_HOME=/opt/modules/bigdata/hive/apache-hive-1.2.1-bin
+     export PATH=$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$HIVE_HOME/bin:$PATH
+3.新建HIVE根目录
+  $ $HADOOP_HOME/bin/hadoop fs -mkdir       /tmp
+  $ $HADOOP_HOME/bin/hadoop fs -mkdir       /user/hive/warehouse
+  $ $HADOOP_HOME/bin/hadoop fs -chmod g+wrx   /tmp
+  $ $HADOOP_HOME/bin/hadoop fs -chmod g+wrx   /user/hive/warehouse
+4.启动hive  (用默认存元数据 Derby  数据库)
+  
+  $HIVE_HOME/bin/hive
+
+三、操练  
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+1.连接客户端   Running Hive CLI(old)
+	$HIVE_HOME/bin/hive
+  Running HiveServer2 and Beeline（new ）
+  	$HIVE_HOME/bin/hiveserver2
+  	另一个终端连：$HIVE_HOME/bin/beeline -u jdbc:hive2://$HS2_HOST:$HS2_PORT	即:$HIVE_HOME/bin/beeline -u jdbc:hive2://localhost:10000
+  	日志查看 more /tmp/hadoop/live.log
+
+2.查看所有的数据库
+	show databases;	
+
+	当前使用哪个数据库
+	use baseball;
+
+	新建数据库
+		create(database|schema)  [if not exists]  testdb  即   create database  if not exists testdb; 说明：如果不存在testdb数据库，就创建。
+	删除数据库
+		drop(database|schema)  [if  exists]  testdb  即   drop database  if  exists testdb; 说明：如果存在testdb数据库，就删除。
+3.查看所有表信息
+	show tables; 
+	按表名称过滤表
+	SHOW TABLES '.*s';
+3.创建表信息
+	CREATE TABLE pokes (foo INT, bar STRING);	
+	创建表，带分区
+	CREATE TABLE invites (foo INT, bar STRING) PARTITIONED BY (ds STRING);
+4.查看表的所有列描述信息
+	describe invites;
+5.删除表
+	drop table invites;	
+
+
+四、介绍 (数据仓库工具-hive)
+-------------------------------------------------
+hive是基于Hadoop的一个数据仓库工具，可以将结构化的数据文件映射为一张数据库表，并提供简单的sql查询功能，可以将sql语句转换为MapReduce任务进行运行。
+其优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用，十分适合数据仓库的统计分析。
+
+大多数企业都有一些拥有关系数据库管理系统 (RDBMSes) 和结构化查询语言 (SQL) 经验的员工。Apache Hive 允许这些数据库开发人员或者数据分析人员使用 Hadoop，
+无需了解 Java 编程语言或者 MapReduce。现在，您可以设计星型模型的数据仓库，或者常态化的数据库，而不需要挑战 MapReduce 代码。

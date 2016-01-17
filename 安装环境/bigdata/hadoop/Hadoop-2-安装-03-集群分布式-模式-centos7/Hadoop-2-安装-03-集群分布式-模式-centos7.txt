@@ -1,0 +1,183 @@
+安装：
+1.系统：centos 7 64位
+2.关闭防火墙和SELinux
+    sudo systemctl status firewalld.service  #检查防火墙状态
+    sudo systemctl stop firewalld.service        #关闭防火墙
+    sudo systemctl disable firewalld.service   #禁止开机启动防火墙
+  
+    关闭SELINUX
+    vi /etc/selinux/config
+     
+    #SELINUX=enforcing  #注释掉
+    #SELINUXTYPE=targeted  #注释掉
+    SELINUX=disabled  #增加
+
+    立即生效配置
+    setenforce 0  #使配置立即生效
+
+3.设置静态IP地址
+    [hadoop@node1 ~]$ cat /etc/sysconfig/network-scripts/ifcfg-eth0
+        TYPE=Ethernet
+        BOOTPROTO=none
+        DEFROUTE=yes
+        IPV4_FAILURE_FATAL=no
+        IPV6INIT=yes
+        IPV6_AUTOCONF=yes
+        IPV6_DEFROUTE=yes
+        IPV6_FAILURE_FATAL=no
+        NAME=eth0
+        UUID=611c81b8-c4a9-4741-9127-09251cab4fe4
+        DEVICE=eth0
+        ONBOOT=yes
+        IPADDR=192.168.0.113
+        PREFIX=24
+        GATEWAY=192.168.0.1
+        DNS1=202.106.46.151
+        DNS2=202.106.195.68
+        IPV6_PEERDNS=yes
+        IPV6_PEERROUTES=yes
+
+4.设置主名称
+ 1)
+ su
+ hostnamectl set-hostname "S0"	
+ 2)
+ /etc/sysconfig/network 
+   (demo:HOSTNAME=S0)
+
+5.安装JDK
+  1).系统自带jdk卸载
+      查找已安装的jdk包
+      rpm   -qa|grep  java
+
+      卸载包
+      rpm -e  --nodeps   包全名称
+  2).安装java ==> JDK  
+     jdk安装目录        cd /opt/modules/jdk
+     解压jdk到当前目录   tar -xvf jdk-8u40-linux-x64.tar    
+  3).设置java 环境变量
+     vi /etc/profile
+     #设置jdk环境变量
+      export JAVA_HOME=/opt/modules/jdk/jdk1.8.0_40
+      export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+      export PATH=$JAVA_HOME/bin:$PATH
+  4).使环境变量生效 source  /etc/profile   
+
+6.安装hadoop(hadoop用户安装)
+  1).解压hadoop包
+    cd /opt/modules/bigdata/hadoop
+    tar -zxvf hadoop-1.2.1.tar.gz
+    创建软链 
+    ln -sf /opt/modules/bigdata/hadoop/hadoop-1.2.1  /home/hadoop/hadoop-1.2.1
+
+    设置hadoop工作目录
+    sudo mkdir -p /opt/hadoop-working-1.2.1
+    sudo chmod -R 777 /opt/hadoop-working-1.2.1/
+
+  2).查看hadoop版本
+     bin/hadoop version
+  4).ssh localhost 不用输入密码
+      $ ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
+      $ cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys 
+      chmod 700 ~/.ssh 
+      chmod 600 ~/.ssh/authorized_keys 
+
+      chmod 755 /home/A
+      (如果不是root用户，是另外的用户例如A，则key文件在/home/A/.ssh中，/home/A 这个文件夹的权限改为755   chmod 755 /home/A)
+
+      vi /etc/ssh/sshd_config
+      找到以下内容，并去掉注释符”#“
+      RSAAuthentication yes
+      PubkeyAuthentication yes
+      AuthorizedKeysFile      .ssh/authorized_keys
+
+      (node1 免密码登录 node2
+         在node2机器上执行：
+         scp node1:~/.ssh/id_dsa.pub ~/temp/id_dsa.node1.pub
+         cat ~/temp/id_dsa.node1.pub >> ~/.ssh/authorized_keys
+      )
+
+7.配置文件
+  1.主机配置  cat /etc/hosts
+      127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+      ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+      192.168.0.110 S0
+      192.168.0.111 S1
+      192.168.0.112 S2
+      192.168.0.113 S3
+  //2.conf/hadoop-env.sh 设置JAVA_HOME(必须要在文件中设置)    
+     // export JAVA_HOME=/opt/modules/jdk/jdk1.8.0_40
+  2.设置hadoop配置文件目录
+    cd /home/hadoop/hadoop-2.7.1/etc
+    mv hadoop hadoop_alone
+    cp hadoop_alone  hadoop_clutser
+    ln -s hadoop    hadoop_clutser   
+
+  3./etc/hadoop/core-site.xml:
+
+  <configuration>
+      <property>
+          <name>fs.defaultFS</name>
+          <value>hdfs://S0:9000</value>
+      </property>
+  </configuration>
+
+  4./etc/hadoop/hdfs-site.xml:
+  <configuration>
+      <property>
+          <name>dfs.replication</name>
+          <value>2</value>
+      </property>
+  </configuration>
+
+
+  4(2).指定 secondary 在哪台机器  /etc/hadoop/hdfs-site.xml:
+    <configuration>
+    <property>
+          <name>dfs.namenode.secondary.http-address</name>
+          <value>S3:50090</value>
+      </property>
+      <property>
+          <name>dfs.replication</name>
+          <value>2</value>
+      </property>
+   </configuration>
+
+  6./etc/hadoop/mapred-site.xml 
+    <configuration>
+         <property>
+              <name>mapreduce.framework.name</name>
+              <value>yarn</value>
+        </property>
+    </configuration>
+  7./etc/hadoop/yarn-site.xml
+    <configuration>
+
+      <property>
+          <name>yarn.resourcemanager.hostname</name>
+          <value>S0</value>
+      </property>
+      <property>
+          <name>yarn.nodemanager.aux-services</name>
+          <value>mapreduce_shuffle</value>
+      </property>
+    </configuration> 
+  8./etc/hadoop/slaves  配置数据节点
+     S1
+     S2
+  7.同步所有节点，配置文件
+     scp /opt/modules/bigdata/hadoop/hadoop-1.2.1/conf/* S1:/opt/modules/bigdata/hadoop/hadoop-1.2.1/conf/
+     scp /opt/modules/bigdata/hadoop/hadoop-1.2.1/conf/* S2:/opt/modules/bigdata/hadoop/hadoop-1.2.1/conf/   
+  7.格式化namenode   bin/hdfs namenode -format
+  8.启动hdfs    sbin/start-dfs.sh    
+    启动yarn    sbin/start-yarn.sh
+  9.访问:http://S1:50070/dfshealth.jsp
+ 
+   11.启动dfs,mapReduce
+      ./start-all.sh  
+      停止： ./stop-all.sh 
+   12.访问Hadoop Map/Reduce
+      http://S1:50030/jobtracker.jsp
+      
+

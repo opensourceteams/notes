@@ -1,0 +1,75 @@
+ZooKeeper-学习笔记-01.txt
+
+------------------------
+zookeeper 动物员管理员
+分布式系统的协同服务
+基于内存
+
+
+zookeeper集群
+leander:领导
+ZNode --zookeeper NOde
+election:选举
+
+zookeeper 服务器
+---------------
+	1.leader,领导
+	2.follower,跟班
+	3.FileSystem
+
+
+分布式应用：配置服务
+          time同步服务
+          相互感知
+
+
+
+zoo.cfg
+------------------------
+1.tickTime:心跳周期
+2.dataDir:数据目录
+3.clientPort:server供客户端连接的端口号
+4.myid:位于dataDir属性指定的目录下，只有一个数字n
+
+
+
+hadoop: 小象
+------------------------
+
+
+pig:小猪
+------------------------
+
+hive:
+------------------------
+
+04.nc
+-------------------------
+
+S1机器:nc -l 1234 > k.txt   输入
+S2机器:nc S1 1234 < /tmp/zookeeper/zookeeper_server.pid  输出
+
+同时输出
+S1机器:  nc -l 1234
+S2机器:nc S1 1234
+
+------------------------------------
+Ｓ1机器：查看S2机器的zookeeper配置信息      
+        1.echo conf | nc S2 2181
+        2. nc S2 2181
+           conf
+
+ 四个字符的指令:
+ ---------------------
+ S2机器: echo ruok | nc S1 2181
+        打印imok
+ S2:机器：echo envi |nc S1 2181    查看S1机器的环境变量设置信息s     
+ S2:机器：echo stat | nc S1 2181  
+
+zookeeper API
+ -------------------------------   
+ 1.创建java项目
+ 2.
+
+
+ zookeeper 事件激活，一次性激活       

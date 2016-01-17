@@ -1,0 +1,10 @@
+hadoop 版本 2.7.1(WordCount,计算两个文件file01,file02中各单词的个数，汇总输出到文件中)
+
+
+3.maxTemperature 
+  hadoop jar /home/hadoop/gdfs/export_jar/maxTemperature.jar    /bigdata/examples/hadoop/hadoop2/input/ncdc/all     /bigdata/examples/hadoop/hadoop2/maxtemperature/output
+4.查看输出结果
+  hadoop dfs -cat /bigdata/examples/hadoop/hadoop2/maxtemperature/output/part-r-00000
+5.结果样本
+  
+6.查看Map/Reduce Administration控制台观查数据指数变化

@@ -1,0 +1,59 @@
+bigdata-命令-01.txt
+
+
+清空/temp/* 目录
+/home/hadoop/shell/batch/bigdata/delete-tmp.sh(一般不需要清理)
+清空日志
+/home/hadoop/shell/batch/bigdata/delete-logs.sh
+
+hadoop
+------------------------------------------------------------------------------------------------------------------
+格式化
+	/opt/modules/bigdata/hadoop/hadoop-2.7.1/bin/hdfs namenode -format
+启动
+	/opt/modules/bigdata/hadoop/hadoop-2.7.1/sbin/start-all.sh
+	或者
+	/opt/modules/bigdata/hadoop/hadoop-2.7.1/sbin/start-dfs.sh
+	/opt/modules/bigdata/hadoop/hadoop-2.7.1/sbin/start-yarn.sh
+停止
+	/opt/modules/bigdata/hadoop/hadoop-2.7.1/sbin/stop-all.sh
+	或者
+		/opt/modules/bigdata/hadoop/hadoop-2.7.1/sbin/stop-dfs.sh
+		/opt/modules/bigdata/hadoop/hadoop-2.7.1/sbin/stop-yarn.sh
+
+
+
+hbase
+------------------------------------------------------------------------------------------------------------------
+启动
+/opt/modules/bigdata/hbase/hbase-1.0.2/bin/start-hbase.sh
+停止
+/opt/modules/bigdata/hbase/hbase-1.0.2/bin/stop-hbase.sh
+hbase shell
+/opt/modules/bigdata/hbase/hbase-1.0.2/bin/hbase shell
+
+同步hbase 配置文件
+/home/hadoop/shell/batch/hbase/scp-hbase-conf.sh
+删除hbase  日志文件
+/home/hadoop/shell/batch/hbase/delete-hbase-logs.sh
+
+
+hbase  zkcli
+------------------------------------------------------------------------------------------------------------------
+/opt/modules/bigdata/hbase/hbase-1.0.2/bin/hbase zkcli
+
+
+
+将hbase 查询到的结果输出到文件中
+echo "scan 'hbase:meta'" | /opt/modules/bigdata/hbase/hbase-1.0.2/bin/hbase shell  > meta.txt
+
+
+spark
+------------------------------------------------------------------------------------------------------------------
+/opt/modules/bigdata/spark/spark-1.5.2-bin-hadoop2.6
+
+
+hive
+------------------------------------------------------------------------------------------------------------------
+/opt/modules/bigdata/hive/apache-hive-1.2.1-bin
+

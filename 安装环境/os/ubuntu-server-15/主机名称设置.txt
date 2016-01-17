@@ -1,0 +1,5 @@
+主机名称设置.txt
+
+sudo vi /etc/hostname
+	S22
+sudo reboot	

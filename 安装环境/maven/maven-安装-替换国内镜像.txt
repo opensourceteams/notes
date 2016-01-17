@@ -1,0 +1,24 @@
+maven-安装-替换国内镜像.txt
+
+
+一、安装maven
+-----------------------------
+	1.安装maven  tar -zxvf /opt/modules/apache/maven/apache-maven-3.3.9-bin.tar.gz  -C  /opt/modules/apache/maven/   即:$M2_HOME=/opt/modules/apache/maven/opt/modules/apache/maven/apache-maven-3.3.9
+	2.设置环境变量 
+		#设置MAVEN
+		export M2_HOME=/opt/modules/apache/maven/apache-maven-3.3.9
+		# PATH 汇总
+		export PATH=$JAVA_HOME/bin:M2_HOME/bin:$PATH
+	3.验证maven安装  mvn -v  会输出mavne的版本信息	
+
+
+一、替换国内镜像
+-----------------------------
+（http://maven.oschina.net/help.html）
+1.修改 $M2_HOME/conf/settings.xml  ,在<mirrors>内加上
+   	<mirror>
+		<id>nexus-osc</id>
+		<mirrorOf>*</mirrorOf>
+		<name>Nexus osc</name>
+		<url>http://maven.oschina.net/content/groups/public/</url>
+	</mirror>

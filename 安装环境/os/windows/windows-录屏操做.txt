@@ -1,0 +1,5 @@
+windows-录屏操做.txt
+
+1.xbox  安装
+2.Win + Alt + R 开始录视频
+3.Win + Alt + R 结束录视频

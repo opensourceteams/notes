@@ -1,0 +1,39 @@
+Derby-安装-02－客户端驱动.txt （Run SQL using the client driver） 支持平台linux,window,macos
+
+
+下载资源
+-----------------------
+jdk
+db-derby-10.12.1.1-bin.tar.gz
+
+
+
+安装
+-----------------------
+1.解压 tar   db-derby-10.12.1.1-bin.tar.gz  -C  /opt/modules/db/derby/db-derby-10.12.1.1-bin/  $DERBY_HOME=/opt/modules/db/derby/db-derby-10.12.1.1-bin
+2.设置环境变量 
+		export DERBY_HOME=/opt/modules/db/derby/db-derby-10.12.1.1-bin
+		export PATH=$DERBY_HOME/bin:$PATH
+		export  CLASSPATH=${DERBY_HOME}/lib/derby.jar:${DERBY_HOME}/lib/derbytools.jar:${DERBY_HOME}/lib/derbyoptionaltools.jar:${CLASSPATH}
+3.java -jar $DERBY_HOME/lib/derbyrun.jar sysinfo
+5.cd /Users/hadoop/workspace/temp/a/DERBYTUTOR       
+6.开启derby数据库服务 java -jar $DERBY_HOME/lib/derbyrun.jar server start
+7.另外打开一个终端连接
+		java -jar $DERBY_HOME/lib/derbyrun.jar ij
+8.建立连接创建数据库 seconddb
+		CONNECT 'jdbc:derby://localhost:1527/seconddb;create=true';
+9.创建表
+		CREATE TABLE SECONDTABLE (ID INT PRIMARY KEY, NAME VARCHAR(14));		
+10.插入数据
+		INSERT INTO SECONDTABLE VALUES  (100,'ONE HUNDRED'),(200,'TWO HUNDRED'),(300,'THREE HUNDRED');	
+11.查询数据
+		SELECT * FROM SECONDTABLE;
+12.查询数据（带条件）					
+		SELECT * FROM SECONDTABLE WHERE ID=200;
+13.退出ij工具
+		exit;
+14.查看日志 
+		cat /Users/hadoop/workspace/temp/a/DERBYTUTOR/derby.log	
+15.关闭数据库
+		java -jar $DERBY_HOME/lib/derbyrun.jar server shutdown				
+

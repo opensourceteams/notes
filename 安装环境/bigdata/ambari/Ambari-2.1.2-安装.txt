@@ -1,0 +1,26 @@
+Ambari-2.1.2-安装.txt
+1.操做系统，centos7, cd /etc/yum.repos.d/  sudo wget   http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.1.2/ambari.repo
+2.安装软件   sudo yum install ambari-server   -y
+3.设置 sudo ambari-server setup  
+(除了JAVA_HOME  选3 自定义，输入自己安装的jdk目录，ambari-server daemon   y 后台启动)
+
+其它的都按回车用默认值
+4.开启服务   sudo ambari-server start
+5.访问地址:http://s2:8080
+6.登录  admin/admin
+
+
+笔记
+--------------------------------------------
+ambari-server :向agent机器发送指令，控制agent,需要在root用户下安装，配置和启动，root帐户可以无密码登录到集群中的其他节点
+ambari-agent:接受server 的指令进行执行，定期向server发送agentnode的状态信息,agent不需要安装，server可以在配置期间自动将agent安装到node上
+
+生成秘钥
+su - root
+ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+
+
+sudo ambari-server
+    {start|stop|restart|setup|setup-jce|upgrade|status|upgradestack|setup-ldap|sync-ldap|set-current|setup-security|refresh-stack-hash|backup|restore} [options]
+
+

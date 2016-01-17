@@ -1,0 +1,61 @@
+spark-安装-03-预编译-集成HADOOP.txt  
+
+1.预编译
+     ).前置条件：先安装好hadoop集群  historyserverforSpark 为spark用的目录  (/opt/modules/bigdata/hadoop/hadoop-2.6.0/bin/hadoop fs -mkdir /historyserverforSpark)
+     ../spark-1.6.0-bin-hadoop2.6.tgz
+     ).解压软件包 tar -zxvf spark-1.6.0-bin-hadoop2.6.tgz  -C /opt/modules/bigdata/spark/   $SPARK_HOME=/opt/modules/bigdata/spark/spark-1.6.0-bin-hadoop2.6
+     ).ln -s /opt/modules/bigdata/spark/spark-1.6.0-bin-hadoop2.6    /home/hadoop/spark-1.6.0-bin-hadoop2.6
+     ).$SPARK_HOME/conf/spark-env.sh.template  复制为  $SPARK_HOME/conf/spark-env.sh 并在开头增加如下变量
+
+     	export JAVA_HOME=/opt/modules/jdk/jdk1.8.0_65
+     	export SCALA_HOME=/opt/modules/scala/scala-2.11.7
+     	export HADOOP_HOME=/opt/modules/bigdata/hadoop/hadoop-2.6.0
+     	export HADOOP_CONF_DIR=/opt/modules/bigdata/hadoop/hadoop-2.6.0/etc/hadoop
+     	export SPARK_MASTER_IP=S20
+     	export SPARK_WORKER_MEMORY=100M
+     	export SPARK_EXECUTOR_MEMORY=100m
+     	export SPARK_DRIVER_MEMORY=100m
+     	export SPARK_WORKER_CORES=8
+
+     ).cp $SPARK_HOME/conf/slaves.template  $SPARK_HOME/conf/slaves  在末尾增加
+		S21
+		S22
+		S23
+		S24
+	 ).cp $SPARK_HOME/conf/spark-defaults.conf.template  $SPARK_HOME/conf/spark-defaults.conf	
+	    spark.executor.extraJavaOptions          -XX:+PrintGCDetails -Dkey=value -Dnumbers="one two three"
+	    spark.eventLog.enabled				     true
+	    spark.eventLog.dir 						 hdfs://S20:9000/historyserverforSpark
+	    spark.yarn.historyServer.address     	 S20:18080
+	    spark.history.fs.logDirectory		     hdfs://S20:9000/historyserverforSpark
+	    #spark.default.parallelism				 100
+	 ).启动spark  $SPARK_HOME/sbin/start-all.sh
+	 ).关闭spark  $SPARK_HOME/sbin/stop-all.sh
+
+	 ).启动历史记录服务  $SPARK_HOME/sbin/start-history-server.sh
+	 ).关闭历史记录服务  $SPARK_HOME/sbin/stop-history-server.sh
+	 ).访问  http://S20:18080  
+	 ).访问  http://S20:8080         
+-----------------------------------------------------------------------------------------------------------------------------------
+提交并行计算
+$SPARK_HOME/bin/spark-submit  --class org.apache.spark.examples.SparkPi  --master spark://S20:7077  ../lib/spark-examples-1.6.0-hadoop2.6.0.jar  1000  (600m，8core用时2.4分钟)
+-----------------------------------------------------------------------------------------------------------------------------------
+ 连接客户端工具
+ 	$SPARK_HOME/bin/spark-shell  --master spark://S20:7077
+
+ 统计单词数量
+ 	sc.textFile("/library/wordcount/input/Data").flatMap(_.split(" ")).map(word => (word,1)).reduceByKey(_+_).map(pair => (pair._2,pair._1)).sortByKey(false).map(pair => (pair._2,pair._1)).saveAsTextFile("/library/wordcount/output/spark_word_count")
+
+ -----------------------------------------------------------------------------------------------------------------------------------
+
+     ).本地测试  $SPARK_HOME/spark-shell 或  $SPARK_HOME/spark-shell local[4] 
+     ).体验:准备文件
+     ).scala> 中每输入一行按回车
+      		   var file = sc.textFile("/home/hadoop/temp/aa.txt")
+      		   #统计行数
+      		   file.count   
+      		   #第一行数据
+      		   file.first
+      		   #统计字符串one的个数
+      		   file.filter(l => l.contains("one"))
+

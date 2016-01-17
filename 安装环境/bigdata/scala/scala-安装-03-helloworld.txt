@@ -1,0 +1,52 @@
+scala-安装-03-helloworld.txt
+
+一、命令行执行
+------------------------------------------------------------
+	scala> object HelloWorld {
+	    |   def main(args: Array[String]): Unit = {
+	    |     println("Hello, world!")
+	    |   }
+	    | }
+	defined module HelloWorld  
+
+	scala> HelloWorld.main(Array())
+	Hello, world!
+
+	scala>:q
+
+二、scala文件编译执行
+------------------------------------------------------------
+1.新建scala文件  HelloWorld.scala	
+
+			object HelloWorld {
+				def main(args: Array[String]): Unit = {
+					println("Hello, world!")
+				}
+
+			}
+2.编译scala文件
+			scalac HelloWorld.scala
+			或者 将编绎的class文件存放到classes文件夹中,classess文件夹需要先建立u   scalac -d classes HelloWorld.scala
+3.执行class文件
+			scala  HelloWorld
+
+
+三、shell 脚本执行
+------------------------------------------------------------			
+新建文件  script.sh
+
+		#!/bin/sh
+		exec scala "$0" "$@"
+		!#
+		object HelloWorld extends App {
+		        println("Hello, world!")
+		}
+
+
+scala 粘贴模式
+--------------------------------------------------------------
+开始：
+	:paste
+
+结束
+	Ctrl + D 

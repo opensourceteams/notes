@@ -1,0 +1,27 @@
+Hbase-1.0.2-运行-java-api-01-创建表.txt
+
+ hbase 通过客户端apid创建表
+ ----------------------------
+ 1.java api创建表
+	 	public static void main(String[] args) throws MasterNotRunningException, ZooKeeperConnectionException, IOException {
+
+			//创建hbase配置对象
+			Configuration conf = HBaseConfiguration.create();
+			//创建一个hbase 的管理员
+			HBaseAdmin admin = new HBaseAdmin(conf);
+			TableName name = TableName.valueOf("test3");
+			//表描述符
+			HTableDescriptor desc = new HTableDescriptor(name);
+			//列描述符
+			HColumnDescriptor hcd = new HColumnDescriptor("data");
+			
+			desc.addFamily(hcd);
+			//创建表
+			admin.createTable(desc);
+			System.out.println("创建表完成");
+		}
+
+ 2.导出jar文件  hbasedemo.jar
+ 3.运行 (先将jar加入到classpath 中，然后再执行运行的类全名称)
+     export HBASE_CLASSPATH=hbasedemo.jar
+     $HABASE_HOME/bin/hbase   test.net.yiup.modules.bigdata.hbase.HbaseApp
