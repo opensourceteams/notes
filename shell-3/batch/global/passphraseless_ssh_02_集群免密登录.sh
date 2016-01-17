@@ -1,7 +1,7 @@
 #!/bin/bash
 #安装远程本机ssh免密登录本机
 
-for i in $( seq 1 4 )
+for i in $( seq 3       4 )
 
 do
     echo 控制台输出第台机器进行ssh免客登录操做:s$i

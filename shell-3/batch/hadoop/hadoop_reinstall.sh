@@ -9,7 +9,7 @@ HADOOP_TAR_GZ_PATH=$HADOOP_DIR/$HADOOP_TAR_GZ
 rm -rf $HADOOP_DIR/hadoop-2.6.0/tmp
 rm -rf $HADOOP_TMP
 
-for((i = 1 ; i <= 4 ; i++))
+for((i = 3 ; i <= 4 ; i++))
 {
   TEMP_HOSTNAME=s$i	
    echo 正在初使化第$TEMP_HOSTNAME台机器

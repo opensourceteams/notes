@@ -4,12 +4,19 @@ bigdata-命令-02.txt
 清空/temp/* 目录
 /home/hadoop/shell/batch/bigdata/delete-tmp.sh(一般不需要清理)
 清空日志
-/home/hadoop/shell/batch/bigdata/delete-logs.sh
+  /home/hadoop/workspaces/github/opensourceteams/notes/shell-3/batch/hadoop/delete-logs.sh
 
-
+jdk
+------------------------------------------------------------------------------------------------------------------
+重新安装jdk                  /home/hadoop/workspaces/github/opensourceteams/notes/shell-3/batch/jdk/jdk_reinstall.sh
 global
 ------------------------------------------------------------------------------------------------------------------
-/home/hadoop/workspaces/github/opensourceteams/notes/shell-3/batch/global/bashrc.sh
+配置bashrc环境变量配置文件             /home/hadoop/workspaces/github/opensourceteams/notes/shell-3/batch/global/bashrc.sh
+
+scala
+------------------------------------------------------------------------------------------------------------------
+重新安装集群每一个节点上的scala
+	/home/hadoop/workspaces/github/opensourceteams/notes/shell-3/batch/scala/scala_reinstall.sh
 
 hadoop
 ------------------------------------------------------------------------------------------------------------------
@@ -45,12 +52,16 @@ hadoop
 
 
 spark
-------------------------------------------------------------------------------------------------------------------		
+------------------------------------------------------------------------------------------------------------------
+     新建目录供spark专用
+     	/opt/modules/bigdata/hadoop/hadoop-2.6.0/bin/hadoop fs -mkdir -p    /historyserverforSpark
+     	/opt/modules/bigdata/hadoop/hadoop-2.6.0/bin/hadoop fs -put ~/temp/wordCount.txt   /library/wordcount/input/Data
+	
      ).同步spark配置文件
            /home/hadoop/shell/batch/spark/scp-spark-conf.sh
 
      ).spark-shell
-             	/opt/modules/bigdata/spark/spark-1.6.0-bin-hadoop2.6/bin/spark-shell  --master spark://S20:7077  
+             	/opt/modules/bigdata/spark/spark-1.6.0-bin-hadoop2.6/bin/spark-shell  --master spark://s0:7077  
              	http://S20:4040 
 
 	 ).启动spark  /opt/modules/bigdata/spark/spark-1.6.0-bin-hadoop2.6/sbin/start-all.sh

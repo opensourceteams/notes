@@ -1,0 +1,28 @@
+
+ssh 免密登录
+------------------------------------------------------------------------------------------------------------------
+	/home/hadoop/workspaces/github/opensourceteams/notes/shell-3/batch/global/passphraseless_ssh_02_集群免密登录.sh
+jdk
+------------------------------------------------------------------------------------------------------------------
+重新安装jdk 
+	/home/hadoop/workspaces/github/opensourceteams/notes/shell-3/batch/jdk/jdk_reinstall.sh
+scala
+------------------------------------------------------------------------------------------------------------------	
+重新安装集群每一个节点上的scala
+	/home/hadoop/workspaces/github/opensourceteams/notes/shell-3/batch/scala/scala_reinstall.sh
+bashrc
+------------------------------------------------------------------------------------------------------------------	
+bashrc环境变量配置
+	/home/hadoop/workspaces/github/opensourceteams/notes/shell-3/batch/global/bashrc.sh
+
+hadoop
+------------------------------------------------------------------------------------------------------------------		
+重新安装集群每一个节点上的hadoop	
+	/home/hadoop/workspaces/github/opensourceteams/notes/shell-3/batch/hadoop/hadoop_reinstall.sh
+同步集群配置文件	
+	/home/hadoop/workspaces/github/opensourceteams/notes/shell-3/batch/hadoop/scp-hadoop-ect.sh	
+
+spark
+------------------------------------------------------------------------------------------------------------------	
+重新安装集群每一个节点上的spark
+	/home/hadoop/workspaces/github/opensourceteams/notes/shell-3/batch/spark/spark_reinstall.sh
