@@ -6,19 +6,24 @@ bigdata-命令-02.txt
 清空日志
 /home/hadoop/shell/batch/bigdata/delete-logs.sh
 
+
+global
+------------------------------------------------------------------------------------------------------------------
+/home/hadoop/workspaces/github/opensourceteams/notes/shell-3/batch/global/bashrc.sh
+
 hadoop
 ------------------------------------------------------------------------------------------------------------------
 安使化集群，同步集群，安装包，到安装前（前提先配好一台）
-	/home/hadoop/shell/batch/hadoop/hadoop_init.sh
+	/home/hadoop/workspaces/github/opensourceteams/notes/shell-3/batch/hadoop/hadoop_init.sh
 
 同步集群配置文件
-	/home/hadoop/shell/batch/hadoop/scp-hadoop-ect.sh
+	/home/hadoop/workspaces/github/opensourceteams/notes/shell-3/batch/hadoop/scp-hadoop-ect.sh
 
 
 查看dfs目录结构
 	/opt/modules/bigdata/hadoop/hadoop-2.6.0/bin/hadoop fs -ls -R /
 上传文件到dfs(先将文件传到服务器上的普通目录下，再传到dfs目录)
-	/opt/modules/bigdata/hadoop/hadoop-2.6.0/bin/hadoop fs -put ~/temp/wordCount.txt /library/wordcount/input/Data/	
+	/opt/modules/bigdata/hadoop/hadoop-2.6.0/bin/hadoop fs -put ~/temp/wordCount.txt   /library/wordcount/input/Data/	
 查看文件内容信息
 	/opt/modules/bigdata/hadoop/hadoop-2.6.0/hadoop dfs -cat  /bigdata/examples/hadoop/hadoop1/wordcount/input/file01
 
@@ -32,7 +37,7 @@ hadoop
 	/opt/modules/bigdata/hadoop/hadoop-2.6.0/sbin/start-dfs.sh
 	/opt/modules/bigdata/hadoop/hadoop-2.6.0/sbin/start-yarn.sh
 停止
-	/opt/modules/bigdata/hadoop/hadoop-2.6.0/sbin/stop-all.shell
+	/opt/modules/bigdata/hadoop/hadoop-2.6.0/sbin/stop-all.sh
 	或者
 		/opt/modules/bigdata/hadoop/hadoop-2.6.0/sbin/stop-dfs.sh
 		/opt/modules/bigdata/hadoop/hadoop-2.6.0/sbin/stop-yarn.sh
