@@ -1,0 +1,6 @@
+eclipse-spark项目－配置.txt
+
+--------------------------------------
+1.scala 选择2.10.x (scala-actors.jar,scala-reflect.jar,scala-library.jar)
+2.spark1.6.0的 jar 文件依赖(spark-assembly-1.6.0-hadoop2.6.0.jar)
+3.新建scala工程导入以上库，新建类WordCount在包下 com.bigdata.spark

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://S0:9000/</value>
+        <description>
+             名称节点配置
+        </description>
+    </property>
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/opt/modules/bigdata/hadoop/hadoop-2.6.0/tmp/hadoop-${user.name}</value>
+        <description>A base for other temporary directories.</description>
+    </property>      
+</configuration>

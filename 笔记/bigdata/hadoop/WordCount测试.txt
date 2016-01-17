@@ -1,0 +1,26 @@
+hadoop 版本 1.2.1(WordCount,计算两个文件file01,file02中各单词的个数，汇总输出到文件中)
+1.上传测试数据，用eclipse的hadoop插件上传文件
+    文件路径: /bigdata/examples/hadoop/hadoop1//wordcount/input/file01
+    文件内容:Hello World Bye World Hello Bye
+    文件路径: /bigdata/examples/hadoop/hadoop1//wordcount/input/file02
+    文件内容:Hello Hadoop Goodbye Hadoop
+2.写WordCount.java 程序
+   1)源代码路径：${HADOOP_HOME}/src/examples/org/apache/hadoop/examples/WordCount.java 
+   2)用FTP或SSH工具把WordCount.java 源码文件上传到启动hadoop的服务器（如：/home/hadoop/temp/WordCount/WordCount.java）
+   3)用jdk编译WordCount.java并打成jar包 
+       1)) cd  /home/hadoop/temp/WordCount
+       2)) mkdir classes
+       3)) javac -classpath ${HADOOP_HOME}/hadoop-core-${HADOOP_VERSION}.jar:${HADOOP_HOME}/lib/commons-cli-1.2.jar -d classes  WordCount.java 
+       4)) jar -cvf ./wordcount.jar -C classes/ .   
+
+3.执行WordCount 
+  ${HADOOP_HOME}/bin/hadoop jar wordcount.jar org.apache.hadoop.examples.WordCount  /bigdata/examples/hadoop/hadoop1/wordcount/input  /bigdata/examples/hadoop/hadoop1/wordcount/output
+4.查看输出结果
+  $HADOOP_HOME/bin/hadoop dfs -cat /bigdata/examples/hadoop/hadoop1/wordcount/output/part-r-00000
+5.结果样本
+    Bye	2
+	Goodbye	1
+	Hadoop	2
+	Hello	3
+	World	2  
+6.查看Map/Reduce Administration控制台观查数据指数变化

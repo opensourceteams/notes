@@ -1,0 +1,9 @@
+系统：  Windows 7旗舰版，64_bit。 
+ 
+需要工具： 
+1、 CentOS安装包：CentOS-7.0-1406-x86_64-DVD.iso，这是32位、64位通用安装包，可以从CentOS官网
+下载；  
+2、 WinGrub，这个工具在这里主要用于查看Windows下的分区表；  
+3、 EasyBCD，这个工具在这里主要用于在Windows下添加Linux的Grub安装引导程序；  
+4、 DiskGenius，这个工具在这里主要用于格式化Windows下的分区为Fat32文件系统，删除分区；      
+5、 一个U盘，用于存放ISO文件

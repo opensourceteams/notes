@@ -1,0 +1,84 @@
+Habase  数据库
+---------------------
+1.面向列(column family)的数据库
+2.基于内存的
+
+
+Habase  数据库 完全分布式配置
+---------------------
+     1.配置hdfs文件系统、分布式开关、zookeeper节点
+       ${habase_home}/conf/hbase-site.xml
+
+		    <configuration>
+		      <property>
+		        <name>hbase.rootdir</name>
+		        <value>hdfs://namenode.example.org:8020/hbase</value>
+		      </property>
+		      <property>
+		        <name>hbase.cluster.distributed</name>
+		        <value>true</value>
+		      </property>
+		      <property>
+		        <name>hbase.zookeeper.quorum</name>
+		        <value>S4,S5,S6</value>
+		      </property>
+		    </configuration>
+
+	 2.配置区域服务器列表
+	   ${habase_home}/conf/regionservers
+	   S4
+	   S5
+	   S6
+	 3.配置hbase备份管理员主机   
+	   ${habase_home}/conf/backup-masters
+	   S4
+	 4.启动
+	    先启动  hadoop   start-all.sh
+	    再启动  hbase   start-hbase.sh 	    
+
+ hbase 通过客户端apid创建表
+ ----------------------------
+ 1.java api创建表
+	 	public static void main(String[] args) throws MasterNotRunningException, ZooKeeperConnectionException, IOException {
+
+			//创建hbase配置对象
+			Configuration conf = HBaseConfiguration.create();
+			//创建一个hbase 的管理员
+			HBaseAdmin admin = new HBaseAdmin(conf);
+			TableName name = TableName.valueOf("test3");
+			//表描述符
+			HTableDescriptor desc = new HTableDescriptor(name);
+			//列描述符
+			HColumnDescriptor hcd = new HColumnDescriptor("data");
+			
+			desc.addFamily(hcd);
+			//创建表
+			admin.createTable(desc);
+			System.out.println("创建表完成");
+		}
+
+ 2.导出jar文件  
+ 3.运行 (先将jar加入到classpath 中，然后再执行运行的类全名称)
+     export HBASE_CLASSPATH=hbasedemo.jar
+     $HABASE_HOME/bin/hbase   test.net.yiup.modules.bigdata.hbase.HbaseApp
+
+    
+
+shell执行hbase 命令
+--------------
+echo "describe 'bigdatatable'" | ./hbase shell  
+echo "describe 'hbase:meta'"   | ./hbase shell
+echo "scan  'hbase:meta'"   | ./hbase shell
+echo "scan  'bigdatatable'"   | ./hbase shell
+echo "scan  'hbase:namespace'"   | ./hbase shell
+echo "help  'create_namespace'"   | ./hbase shell
+//查找帮助
+echo "help  "   | ./hbase shell
+//查找帮助 namespace
+echo "help  'namespace'"   | ./hbase shell
+//创建名字空间  ns_yiup
+echo "create_namespace  'ns_yiup'"   | ./hbase shell
+//查看名字空间 
+echo "scan  'hbase:namespace'"   | ./hbase shell
+//删除名字空间
+echo "drop_namespace  'ns_yiup'"   | ./hbase shell

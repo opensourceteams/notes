@@ -1,0 +1,15 @@
+Zookeeper-命令-01.txt
+服务器端
+启动  zkServer.sh start
+停止  zkServer.sh stop
+状态  zkServer.sh status
+
+1.客户端连接服务器
+   zkCli.sh -server S1
+2.查看目录  ls /
+3.创建目录和数据  create /root  hellozk
+4.得到数据 get /root
+5.更新数据  set /root /hellozk2cccdsaaqw3
+6.不显示子节点信息：stat /root
+7.断开连接 close
+8.重新连接 connect S2:2181

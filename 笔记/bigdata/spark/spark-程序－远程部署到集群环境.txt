@@ -1,0 +1,145 @@
+spark-程序－远程部署到集群环境.txt
+
+
+-------------------------------------------------------
+1.将程序打成jar文件
+2.直接在工具中运行类程序
+3.注意：设置master  和远程文件路径:
+
+ val conf = new SparkConf
+  conf.setAppName("单词计数").setMaster("spark://S20:7077")
+  conf.setJars(Array("/Users/hadoop/workspace/bigdata/all_frame_intellij/Spark1.6.0-practice-maven/target/Spark1.6.0-practice-maven-1.0.jar"))
+4.提供示例
+-----------------------------------------------------------------------------------
+  	object WordCount.scala
+
+			package net.yiup.modules.common.bigdata.spark.quickstart
+
+			import org.apache.spark.{SparkContext, SparkConf}
+
+			/**
+			  * Created by hadoop on 16/1/14.
+			  */
+			object WordCount extends App{
+
+			  val conf = new SparkConf()
+			 // conf.setExecutorEnv(Array("SPARK_MASTER_ID" -> "192.168.0.120","SPARK_LOCAL_ID" -> "192.168.0.101","SPARK_WORKER_MEMORY" -> "1000m","SPARK_EXECUTOR_MEMORY" -> "1000m","SPARK_DRIVER_MEMORY" -> "1000m"))
+			  //conf.set("spark.executor.memory","1000m")
+
+			  conf.setAppName("单词计数")
+			  
+			  //conf.setMaster("local")
+			  conf.setMaster("spark://S20:7077")
+
+			  conf.setJars(Array("/Users/hadoop/workspace/bigdata/all_frame_intellij/Spark1.6.0-practice-maven/target/Spark1.6.0-practice-maven-1.0.jar"))
+			  val sc = new SparkContext(conf)
+			  val textFile = sc.textFile("hdfs://S20:9000/library/wordcount/input/Data/wordCount.txt",1)
+			  //println("textFile.counts:"+textFile.count())
+			  val counts = textFile.flatMap(line => line.split(" ")).map(word => (word,1)).reduceByKey(_ + _)
+
+			  println("counts:"+counts)
+			  counts.collect().foreach(x => println(x))
+			  counts.saveAsTextFile("hdfs://S20:9000/library/wordcount/output/spark_word_count_44")
+
+			  sc.stop()
+
+			}
+-----------------------------------------------------------------------------------
+5.提供自动打包工具maven
+pom.xml
+-----------------------------------------------------------------------------------
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>net.yiup</groupId>
+    <artifactId>${project.name}</artifactId>
+    <version>1.0</version>
+
+    <dependencies>
+<!--        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-compiler</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-reflect</artifactId>
+            <version>${scala.version}</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.12</version>
+        </dependency>
+
+                <dependency>
+                    <groupId>org.apache.spark</groupId>
+                    <artifactId>spark-core_2.10</artifactId>
+                    <version>${apache.spark-core.version}</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.apache.hadoop</groupId>
+                    <artifactId>hadoop-client</artifactId>
+                    <version>${apache.hadoop-client.version}</version>
+                </dependency>
+
+
+
+    </dependencies>
+
+    <build>
+        <!--
+         sourceDirectory:默认写java源文件不改    src/main/java
+         resources >> resource >> directory  自定义源文件  src/main/example/scala
+         -->
+        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
+        <resources>
+<!--
+           <resource>
+                <directory>${project.basedir}/src/main/example/scala</directory>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/scala</directory>
+            </resource>
+            -->
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>2.15.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <properties>
+        <project.name>Spark1.6.0-practice-maven</project.name>
+        <scala.version>2.10.6</scala.version>
+        <apache.spark-core.version>1.6.0</apache.spark-core.version>
+        <apache.hadoop-client.version>2.6.0</apache.hadoop-client.version>
+
+    </properties>
+</project>
+

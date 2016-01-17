@@ -1,0 +1,89 @@
+scan 'hbase:meta'
+ROW  COLUMN+CELL
+ hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363. column=info:regioninfo, timestamp=1451070660972, value={ENCODED => 62b96c1b758f835d5f29c7ea85e10363, NAME => 'hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363.', STARTKEY => '', ENDKEY => ''}
+ hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363. column=info:seqnumDuringOpen, timestamp=1451340376592, value=\x00\x00\x00\x00\x00\x00\x00#
+ hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363. column=info:server, timestamp=1451340376592, value=S6:16020
+ hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363. column=info:serverstartcode, timestamp=1451340376592, value=1451339163746
+ testbig1,,1451339214568.a933a64baaa67d8150f91734168aaa1c. column=info:regioninfo, timestamp=1451339237095, value={ENCODED => a933a64baaa67d8150f91734168aaa1c, NAME => 'testbig1,,1451339214568.a933a64baaa67d8150f91734168aaa1c.', STARTKEY => '', ENDKEY => ''}
+ testbig1,,1451339214568.a933a64baaa67d8150f91734168aaa1c. column=info:seqnumDuringOpen, timestamp=1451339214824, value=\x00\x00\x00\x00\x00\x00\x00\x02
+ testbig1,,1451339214568.a933a64baaa67d8150f91734168aaa1c. column=info:server, timestamp=1451339214824, value=S4:16020
+ testbig1,,1451339214568.a933a64baaa67d8150f91734168aaa1c. column=info:serverstartcode, timestamp=1451339214824, value=1451339132965
+2 row(s) in 0.2740 seconds
+
+
+
+------------------------
+split 'testbig1'
+
+scan 'hbase:meta'
+ROW  COLUMN+CELL
+ hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363. column=info:regioninfo, timestamp=1451070660972, value={ENCODED => 62b96c1b758f835d5f29c7ea85e10363, NAME => 'hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363.', STARTKEY => '', ENDKEY => ''}
+ hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363. column=info:seqnumDuringOpen, timestamp=1451340376592, value=\x00\x00\x00\x00\x00\x00\x00#
+ hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363. column=info:server, timestamp=1451340376592, value=S6:16020
+ hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363. column=info:serverstartcode, timestamp=1451340376592, value=1451339163746
+
+
+ testbig1,,1451339214568.a933a64baaa67d8150f91734168aaa1c. column=info:regioninfo, timestamp=1451340896501, value={ENCODED => a933a64baaa67d8150f91734168aaa1c, NAME => 'testbig1,,1451339214568.a933a64baaa67d8150f91734168aaa1c.', STARTKEY => '', ENDKEY => '', OFFLINE => true, SPLIT => true}
+ testbig1,,1451339214568.a933a64baaa67d8150f91734168aaa1c. column=info:seqnumDuringOpen, timestamp=1451339214824, value=\x00\x00\x00\x00\x00\x00\x00\x02
+ testbig1,,1451339214568.a933a64baaa67d8150f91734168aaa1c. column=info:server, timestamp=1451339214824, value=S4:16020
+ testbig1,,1451339214568.a933a64baaa67d8150f91734168aaa1c. column=info:serverstartcode, timestamp=1451339214824, value=1451339132965
+ testbig1,,1451339214568.a933a64baaa67d8150f91734168aaa1c. column=info:splitA, timestamp=1451340896501, value={ENCODED => b57afda43c0eb5a0cd8ebcbaf9325103, NAME => 'testbig1,,1451340863523.b57afda43c0eb5a0cd8ebcbaf9325103.', STARTKEY => '', ENDKEY => 'row446810'}
+ testbig1,,1451339214568.a933a64baaa67d8150f91734168aaa1c. column=info:splitB, timestamp=1451340896501, value={ENCODED => dec8439f13ec4fe3fc0f461faa8ad6da, NAME => 'testbig1,row446810,1451340863523.dec8439f13ec4fe3fc0f461faa8ad6da.', STARTKEY => 'row446810', ENDKEY => ''}
+
+ testbig1,,1451340863523.b57afda43c0eb5a0cd8ebcbaf9325103. column=info:regioninfo, timestamp=1451340896501, value={ENCODED => b57afda43c0eb5a0cd8ebcbaf9325103, NAME => 'testbig1,,1451340863523.b57afda43c0eb5a0cd8ebcbaf9325103.', STARTKEY => '', ENDKEY => 'row446810'}
+ testbig1,,1451340863523.b57afda43c0eb5a0cd8ebcbaf9325103. column=info:seqnumDuringOpen, timestamp=1451340863921, value=\x00\x00\x00\x00\x00\x00\x02`
+ testbig1,,1451340863523.b57afda43c0eb5a0cd8ebcbaf9325103. column=info:server, timestamp=1451340863921, value=S4:16020
+ testbig1,,1451340863523.b57afda43c0eb5a0cd8ebcbaf9325103. column=info:serverstartcode, timestamp=1451340863921, value=1451339132965
+
+ testbig1,row446810,1451340863523.dec8439f13ec4fe3fc0f461faa8ad6da. column=info:regioninfo, timestamp=1451340896501, value={ENCODED => dec8439f13ec4fe3fc0f461faa8ad6da, NAME => 'testbig1,row446810,1451340863523.dec8439f13ec4fe3fc0f461faa8ad6da.', STARTKEY => 'row446810', ENDKEY => ''}
+ testbig1,row446810,1451340863523.dec8439f13ec4fe3fc0f461faa8ad6da. column=info:seqnumDuringOpen, timestamp=1451340863906, value=\x00\x00\x00\x00\x00\x00\x02a
+ testbig1,row446810,1451340863523.dec8439f13ec4fe3fc0f461faa8ad6da. column=info:server, timestamp=1451340863906, value=S4:16020
+ testbig1,row446810,1451340863523.dec8439f13ec4fe3fc0f461faa8ad6da. column=info:serverstartcode, timestamp=1451340863906, value=1451339132965
+4 row(s) in 0.4900 seconds
+
+
+
+
+合并后的
+-------------------
+merge_region 'b57afda43c0eb5a0cd8ebcbaf9325103','dec8439f13ec4fe3fc0f461faa8ad6da', true
+
+scan 'hbase:meta'
+ROW  COLUMN+CELL
+ hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363. column=info:regioninfo, timestamp=1451070660972, value={ENCODED => 62b96c1b758f835d5f29c7ea85e10363, NAME => 'hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363.', STARTKEY => '', ENDKEY => ''}
+ hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363. column=info:seqnumDuringOpen, timestamp=1451340376592, value=\x00\x00\x00\x00\x00\x00\x00#
+ hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363. column=info:server, timestamp=1451340376592, value=S6:16020
+ hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363. column=info:serverstartcode, timestamp=1451340376592, value=1451339163746
+
+ testbig1,,1451343297062.028df4953ba760e03cd071cf8636a6aa. column=info:regioninfo, timestamp=1451343307114, value={ENCODED => 028df4953ba760e03cd071cf8636a6aa, NAME => 'testbig1,,1451343297062.028df4953ba760e03cd071cf8636a6aa.', STARTKEY => '', ENDKEY => ''}
+ testbig1,,1451343297062.028df4953ba760e03cd071cf8636a6aa. column=info:seqnumDuringOpen, timestamp=1451343297695, value=\x00\x00\x00\x00\x00\x00\x02b
+ testbig1,,1451343297062.028df4953ba760e03cd071cf8636a6aa. column=info:server, timestamp=1451343297695, value=S4:16020
+ testbig1,,1451343297062.028df4953ba760e03cd071cf8636a6aa. column=info:serverstartcode, timestamp=1451343297695, value=1451339132965
+2 row(s) in 0.2110 seconds
+
+
+
+
+scan 'hbase:meta'
+ROW  COLUMN+CELL
+ hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363. column=info:regioninfo, timestamp=1451070660972, value={ENCODED => 62b96c1b758f835d5f29c7ea85e10363, NAME => 'hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363.', STARTKEY => '', ENDKEY => ''}
+ hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363. column=info:seqnumDuringOpen, timestamp=1451340376592, value=\x00\x00\x00\x00\x00\x00\x00#
+ hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363. column=info:server, timestamp=1451340376592, value=S6:16020
+ hbase:namespace,,1451070660717.62b96c1b758f835d5f29c7ea85e10363. column=info:serverstartcode, timestamp=1451340376592, value=1451339163746
+
+ testbig1,,1451343297062.028df4953ba760e03cd071cf8636a6aa. column=info:regioninfo, timestamp=1451344581279, value={ENCODED => 028df4953ba760e03cd071cf8636a6aa, NAME => 'testbig1,,1451343297062.028df4953ba760e03cd071cf8636a6aa.', STARTKEY => '', ENDKEY => '', OFFLINE => true, SPLIT => true}
+ testbig1,,1451343297062.028df4953ba760e03cd071cf8636a6aa. column=info:seqnumDuringOpen, timestamp=1451343297695, value=\x00\x00\x00\x00\x00\x00\x02b
+ testbig1,,1451343297062.028df4953ba760e03cd071cf8636a6aa. column=info:server, timestamp=1451343297695, value=S4:16020
+ testbig1,,1451343297062.028df4953ba760e03cd071cf8636a6aa. column=info:serverstartcode, timestamp=1451343297695, value=1451339132965
+ 
+ testbig1,,1451343297062.028df4953ba760e03cd071cf8636a6aa. column=info:splitA, timestamp=1451344581279, value={ENCODED => 534e18fa882328e362418985f9c8faf6, NAME => 'testbig1,,1451344548265.534e18fa882328e362418985f9c8faf6.', STARTKEY => '', ENDKEY => 'row554160'}
+ testbig1,,1451343297062.028df4953ba760e03cd071cf8636a6aa. column=info:splitB, timestamp=1451344581279, value={ENCODED => 98701faf3abd5506f4acfc794178d44b, NAME => 'testbig1,row554160,1451344548265.98701faf3abd5506f4acfc794178d44b.', STARTKEY => 'row554160', ENDKEY => ''}
+ testbig1,,1451344548265.534e18fa882328e362418985f9c8faf6. column=info:regioninfo, timestamp=1451344581279, value={ENCODED => 534e18fa882328e362418985f9c8faf6, NAME => 'testbig1,,1451344548265.534e18fa882328e362418985f9c8faf6.', STARTKEY => '', ENDKEY => 'row554160'}
+ testbig1,,1451344548265.534e18fa882328e362418985f9c8faf6. column=info:seqnumDuringOpen, timestamp=1451344548698, value=\x00\x00\x00\x00\x00\x00\x02b
+ testbig1,,1451344548265.534e18fa882328e362418985f9c8faf6. column=info:server, timestamp=1451344548698, value=S4:16020
+ testbig1,,1451344548265.534e18fa882328e362418985f9c8faf6. column=info:serverstartcode, timestamp=1451344548698, value=1451339132965
+ testbig1,row554160,1451344548265.98701faf3abd5506f4acfc794178d44b. column=info:regioninfo, timestamp=1451344581279, value={ENCODED => 98701faf3abd5506f4acfc794178d44b, NAME => 'testbig1,row554160,1451344548265.98701faf3abd5506f4acfc794178d44b.', STARTKEY => 'row554160', ENDKEY => ''}
+ testbig1,row554160,1451344548265.98701faf3abd5506f4acfc794178d44b. column=info:seqnumDuringOpen, timestamp=1451344548671, value=\x00\x00\x00\x00\x00\x00\x02c
+ testbig1,row554160,1451344548265.98701faf3abd5506f4acfc794178d44b. column=info:server, timestamp=1451344548671, value=S4:16020
+ testbig1,row554160,1451344548265.98701faf3abd5506f4acfc794178d44b. column=info:serverstartcode, timestamp=1451344548671, value=1451339132965
+4 row(s) in 0.2680 seconds

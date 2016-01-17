@@ -1,0 +1,97 @@
+Hbase-数据库－02-客户端操作.txt
+1.连接到 hbase shell
+	/opt/modules/bigdata/hbase/hbase-1.0.2/bin/hbase shell
+
+	$HBASE_HOME/bin/hbase shell		
+ 	创建表:
+ 		create 'test', 'cf'		
+ 	插入数据:
+	 	put 'test', 'row1', 'cf:a', 'value1'
+	 	put 'test', 'row2', 'cf:b', 'value2'
+	 	put 'test', 'row3', 'cf:c', 'value3'	
+	检查插入数据:
+		scan 'test'
+	Get一行，操作如下
+		get 'test', 'row1'
+	disable 再 drop 这张表，可以清除你刚刚的操作
+		disable 'test
+		drop 'test'
+	关闭shell
+		exit
+
+  ================================================================================================================
+  hbase shell命令 
+  ================================================================================================================
+
+  help
+  -----------
+  帮助命令 :help   会列出主要的命令集提示 
+
+  help 'create'
+  -----------
+  创建表命令帮助提示：  help 'create'   会提示如何创建表的语法提示信息和示例。
+
+  Group name: ddl
+  ================================================================================================================
+  create
+  -----------
+  创建表: create 't1','f1'  即  create '表名称','列族名称'   示例  create 'test1','data'  说明：创建表test1,表中列族为data
+  disable
+  -----------
+  禁用表: disable 't1'  即  disable '表名称'  示例  disable 'test1',  说明：禁用表test1  配合 drop 表  共同使用才能删除表
+  drop
+  -----------
+  删除表: drop 't1'  即  drop '表名称'  示例  drop 'test1',  说明：删除表test1  drop 表请先disable表
+  exists
+  -----------
+  判断表是否存在: exists 't1'  即  exists '表名称'  示例  exists 'test1',  说明：判断表test1是否存在，存在输出Table test1 does exist,不存在输出Table test2 does not exist
+  is_disabled
+  -----------
+  判断表是否禁用: is_disabled 't1'  即  is_disabled '表名称'  示例  is_disabled 'test1',  说明：判断表test1是否禁用，没有禁用输出 false, 禁用输出 true
+  describe|desc
+  -----------
+  表描述信息: describe 't1'  即  describe '表名称'   示例  describe 'test1'  说明：表描述息test1,列出表的列等相关信息，describe的简称为 desc
+
+
+  list 
+  -----------
+  查看所有表: list  即 list   说明：会列出所有表
+
+  Group name: dml
+  ================================================================================================================
+  status:查看当前服务器状态信息	
+  count
+  -----------
+  统计表行数：count 'test1' 	即  count '表名称'  示例  count 'test1'  说明:统计表test1的总行数
+  put
+  -----------
+  插入数据： put 't1', 'r1', 'c1', 'value'    即  put '表名称','行名称','列名称','值'   示例 put 'test1','row1','data:1','data1'  说明：向表test1中的行row1中的列族data，列描述1中插入值为data1
+  deleteall
+  -----------
+  删除表行: deleteall 't1', 'r1'  即  deleteall '表名称','行名称'   示例  deleteall 'test1','row1'  说明：删除表test1的行row1 的所有单元数据
+  scan
+  -----------
+  扫描表: scan 't1' 即  scan '表名称'   示例  scan 'test1'  说明：扫描表的所有数据,scan 'test1' ,LIMIT => 10  只显示表test1的10条记录
+
+  count
+  -----------
+  扫描表行数: count 't1' 即  count '表名称'   示例  count 'test1'  说明：扫描表的所有行数
+  count 'testbig' ,INTERVAL => 100000  每次间隔 10万行扫描
+
+
+  Group name: tools
+  ================================================================================================================
+  split
+  -----------
+  分割表:split 't1'   即  split '表名称'  示例  split 'test1'  说明:分割表 test1 ,把表数据文件分割
+  merge_region
+  -----------
+  合并表：merge_region 'ENCODED_REGIONNAME', 'ENCODED_REGIONNAME', true 即  merge_region 'ENCODED值1','ENCODED值2' ,true  示例  merge_region 'b57afda43c0eb5a0cd8ebcbaf9325103','dec8439f13ec4fe3fc0f461faa8ad6da' true
+         merge可以通过 scan 'hbase:meta'  查看
+
+
+
+
+  ================================================================================================================
+  将hbase 查询到的结果输出到文件中
+  echo "scan 'hbase:meta'" | /opt/modules/bigdata/hbase/hbase-1.0.2/bin/hbase shell  > meta.txt       

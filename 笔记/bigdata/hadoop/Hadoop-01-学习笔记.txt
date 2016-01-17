@@ -1,0 +1,171 @@
+hadoop 
+数据量进制：
+----------
+    1.bit = 1位
+    2.1byte = 8 bit
+    3.1kb = 1024 b
+    4.1m = 1024 k
+    5.1g = 1024 m
+    6.1t = 1024 g
+    7.1p = 1024 t
+    8.1e = 1024 p
+    9.1z = 1024 e
+    10.1y = 1024 z
+
+ 存储
+ -----------
+ 1.分割   
+       分布式. dfs :  distributed file system.  hdfs
+ 2.运算
+       mapreduce:map(映射) --> reduce(化简)     
+
+
+       MapReduce:map +reduce,大数据量（纯文本）
+  RAID 磁盘阵列:reduntant array of indenpendent disks,独立磁盘冗佘阵列   
+
+  NadeNode:至关重要，只有1个,Raid.
+  DataNode:
+
+  HADOOP_CONF_DIR  配置文件目录配置
+
+
+  符号链接
+  ----------- 快捷方式   目标文件删除，符号链接不删除
+
+  硬链接
+  ----------- hadr link ,磁盘文件上的两个完全相同的文件或目录,实时同步
+
+  hadoop 数据备份 
+  举例3份
+  ----------- 
+  hadoop 1 找同一交换机上，备份一份，再到相邻另一交换机上找两个节点
+  hadoop 2 找相邻交换机上，备份两份，再到另一交换机上找一个节点备份
+
+  Hadoop 架构分析
+   ----------- 
+   1.Hadoop 分布式文件系统
+   2.按需定制MapReduce
+   3.目标在于多次的文件流读取
+   4.写入成本很高
+   5.高度数据冗佘
+   6.每个节点
+
+   运行jar 文件 window
+   set HADOOP_CLASSPATH=hadoopDemo2.jar
+   hadoop  -XMx1000m example.net.yiup.models.common.bigdata.hadoop.hadoop2.mapreduce.maxtemperature.MaxTemperatureWithCombiner   file:///D:\hadoop\ncdc_data\19*.gz
+
+
+   3.修改副本数量和块大小
+
+    1.hdfs-site.xml
+       <!--辅助namenode-->
+         <property>
+            <name>dfs.namenode.secondary.http-address</name>
+            <value>S3:50090</value>
+        </property>
+        <!-- 副本数量 -->
+        <property>
+            <name>dfs.replication</name>
+            <value>2</value>
+        </property>
+        <!-- 数据块大小 -->
+        <property>
+            <name>dfs.blocksize</name>
+            <value>20k</value>
+            <description>
+                The default block size for new files, in bytes.
+                You can use the following suffix (case insensitive):
+                k(kilo), m(mega), g(giga), t(tera), p(peta), e(exa) to specify the size (such as 128k, 512m, 1g, etc.),
+                Or provide complete size in bytes (such as 134217728 for 128 MB).
+            </description>
+        </property>
+    2.发送hdfs-site.xml给所有节点
+    3.重启集群
+        a.删除所有节点的临时目录
+        b.格式化文件系统  hadoop namenode -format
+        c.start-dfs.sh
+        d.start-yarn.sh
+
+
+
+
+
+
+      Permission  Owner Group Size  Last Modified Replication Block Size  Name
+-rw-r--r--  hadoop  supergroup  72.14 KB  2015/12/22 上午9:46:01  2 20 KB 1901.gz
+Block 0 ==> S5 S4
+Block 1 ==> S3 S5 
+Block 2 ==> S2 S1
+Block 3 ==> S4 S2
+
+S1-->1
+S2-->2
+S3-->1
+S4-->2
+S5-->2
+
+43.Hadoop MapReduce集群模式深入定制切割与切割法则考查
+ hdfs: namenode          :p:50070 (http://s0:50070/dfshealth.html#tab-overview)
+       datanode          :50075   (http://s1:50075/jmx)
+       secondarynamecode :50090   (http://s7:50090/status.html)
+ mapreduce(yarn):
+       resourcemanager:   ip:8088 (http://s0:8088/cluster)
+       nodemanager:       ip:8042
+
+
+
+         //设置最大的切割尺寸
+        //conf.setLong(FileInputFormat.SPLIT_MAXSIZE, 1024 * 50);
+        
+        
+        //设置最小的切割尺寸
+        conf.setLong(FileInputFormat.SPLIT_MINSIZE, 1024 * 30);
+
+        FileInputFormat.SPLIT_MINSIZE  < dfs.blocksize   < FileInputFormat.SPLIT_MAXSIZE  按  
+
+51. task
+    MapTaskImpl 
+    ReduceTaskImpl
+
+     57.远程调试
+     --------------------------------
+     1. 远程服务器记口月禾jvm的远程调试
+         a.运行java程序时，直接指定参数：java -XXXX -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8000
+         b.先设置环境变量，再启动jvm,直接环境变量附加在jvm启动参数之后 
+          export XXX -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8000
+          java yyy $XXX
+         c.${hadoop_home}\bin\yarn
+                $YARN_RESOURCEMANAGER_OPTS
+
+     2.编写脚本
+          enable_yarn_remotedebug.sh
+          export  YARN_RESOURCEMANAGER_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8000     
+     3.执行脚本
+          ./enable_yarn_remotedebug.sh
+          source enable_yarn_remotedebug.sh
+     4.启动rm
+           start-yarn.sh
+           启动多个nm,但是rm暂停在监听8000的过程中.
+     5.到客户端中设置断点，连接到远程的rm程序，进行远程调试
+        a.客户端:org.apache.hadoop.yarn.server.resourcemanager.ResourceManager   main方法设置断点 
+        b.eclipse 右键，Debug As ==> Debug Configurations  ==>  选中Remote  Java Application  右键  New 打开远程调试配置窗  ==>
+            Project ：选择当前java项目  
+            Connection Type: Standard (Socket Attach)   
+            Connection Properties:  host:主机名称或ip地址   Port:8000     Allow termination of remote Vm 不需要选中
+
+        c.点Debug开始调试   
+
+
+58. Hadoop Yarn 框架底层事件分发机制概述
+    YARN:
+    --------------
+    基于事件的:
+
+    Job
+    --------------
+      1.application
+      2.application 基于状态机模型
+      3.状态之间的变换通过事件触发的
+        AsyncDispatcher:异步事件分发器            
+
+  

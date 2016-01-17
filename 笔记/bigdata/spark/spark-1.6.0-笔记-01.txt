@@ -1,0 +1,20 @@
+spark-1.6.0-笔记-01.txt
+
+spark 弹性
+
+). 自动进行内存和磁盘数据存储的切换
+).基于Lineage的高校容错
+).Task如果失败会自动进行特定次的重试
+).Stage如果失败自动进行特定的重试
+
+
+缓存：特别耗时、计算链条、Shuffle之后、checkPoint
+
+spark-shell
+-------------------------------------------------------
+flatted.toDebugString
+
+val flatted = data.flatMap(_.split(" "))
+val mapped =flatted.map(word => (word,1))
+val reduced = mapped.reduceByKey(_+_)
+reduced.saveAsTextFile("/library/wordcount/output/spark_word_count_1")

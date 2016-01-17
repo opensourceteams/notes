@@ -1,0 +1,16 @@
+spark-笔记-02.txt
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+At a high level, every Spark application consists of a driver program that runs the user’s main function and executes various parallel operations on a cluster. The main abstraction Spark provides is a resilient distributed dataset (RDD), which is a collection of elements partitioned across the nodes of the cluster that can be operated on in parallel. RDDs are created by starting with a file in the Hadoop file system (or any other Hadoop-supported file system), or an existing Scala collection in the driver program, and transforming it. Users may also ask Spark to persist an RDD in memory, allowing it to be reused efficiently across parallel operations. Finally, RDDs automatically recover from node failures.
+
+A second abstraction in Spark is shared variables that can be used in parallel operations. By default, when Spark runs a function in parallel as a set of tasks on different nodes, it ships a copy of each variable used in the function to each task. Sometimes, a variable needs to be shared across tasks, or between tasks and the driver program. Spark supports two types of shared variables: broadcast variables, which can be used to cache a value in memory on all nodes, and accumulators, which are variables that are only “added” to, such as counters and sums.
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+翻译  spark 概述
+spark 是一个高标准的,每一个Spark应用是由一个驱动指令构成=>驱动指令运行着用户的入口函数和执行着集群多种并行操做
+spark 主要的概念,提供一个弹性的分布式数据集(RDD),RDD是一段被分隔的元素的集合，RDD能跨集群多节点并行操做,RDD是hadoop文件系统启动的时候被创建,或现有的Scala驱动指令的集合，转化RDD，
+用户也可以要求Spark存留RDD在内存中，容许在并行操做有效重用，最后，RDD能自动从错误节点恢复
+
+Spark的第二个概念是共享变量，可以用于并行操做，默认情况下，spark在不同的节点上的一组任务,并行运行一个函数,spark每个变量的复本用于每个任务的函数,有时变量需要跨任务共享,或跨任务和驱动指令共享
+park支持两种类型的共享变量，（广播变量）：用于所有节点的内存中缓存值，（插拔变量）：添加变量，例如计数器，求和器

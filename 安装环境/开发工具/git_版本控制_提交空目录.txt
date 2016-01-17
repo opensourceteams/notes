@@ -1,0 +1,4 @@
+git_版本控制.txt
+
+＃先切换到src 目录下，执行以后语句，把所有当前目录下的空目录加上文悠扬.gitignore 这样就可以提交空目录了
+find . -type d -empty -exec touch {}/.gitignore \;

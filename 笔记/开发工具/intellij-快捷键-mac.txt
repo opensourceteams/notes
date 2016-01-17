@@ -1,0 +1,39 @@
+intellij-快捷键-mac.txt
+
+
+intellij 快捷键 mac 版
+代码自动提示：command + j
+代码补全 : option + /
+代码格式化:command + option + l
+自动导入类的包头  option + Enter
+Debug 运行 option + command +  r
+运行 control + option + r
+给出代码示例：command + y     它会弹窗显示建议列表中的方法定义的内容，如果你不确定要使用哪个方法
+类层级关系  control + h
+快速打开光标处的类或方法  command+B 
+
+详细方法、类 command + 点击类名、方法
+
+快速定位类所在的位置  fn + option + F1 选 project view 按回车
+
+编缉
+-----------------------------------------------------------------------
+
+删除当前行 command + x 
+复制当前行 command + d 
+
+-----------------------------------------------------------------------
+可以同时打开多个项目  intellij   Appearancd & Behavior ==> System Settings ==> Project Opening => Open Project in new window
+
+
+
+
+-----------------------------------------------------------------------
+IntelliJ IDEA 设置代码提示或自动补全的快捷键
+在左侧的导航框中点击 KeyMap。 
+接着在右边的树型框中选择 Main menu –> Code –> Completion. 
+接着需要做两件事： 
+1. 移除原来的Cycle Expand Word 的 Alt+斜杠 快捷键绑定。 
+2. 在 Basic 上点击右键,去除原来的 Ctrl+空格 绑定,然后添加 Alt + 斜杠 快捷键。
+
+然后应用(Apply), OK.

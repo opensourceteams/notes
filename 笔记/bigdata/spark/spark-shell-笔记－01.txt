@@ -1,0 +1,60 @@
+sparl-shell-笔记－01.txt
+
+----------------------------------------------------------------------------------------------
+打印输出
+  val errors = sc.textFile(path,1)
+  errors.collect().foreach(x => println("读取文件的内容:" + x))
+
+   errors.collect().foreach(x => println("读取文件的内容:" + x(0)))
+----------------------------------------------------------------------------------------------
+ 统计行单词数量最多的数量
+ /opt/modules/bigdata/spark/spark-1.6.0-bin-hadoop2.6/bin/spark-shell  --master spark://S20:7077  
+ val textFile = sc.textFile("hdfs://S20:9000/library/wordcount/input/Data/wordCount.txt")
+ val lineWordCount = textFile.map(line => line.split(" ").size).reduce((a, b) => if (a > b) a else b)
+
+
+ val lineWordCount = textFile.map(line => line.split(" ").size).reduce((a, b) => if (a > b) a else b)
+ 等价于
+ import java.lang.Math
+ val lineWordCount = textFile.map(line => line.split(" ").size).reduce((a, b) => Math.max(a,b)
+
+ ----------------------------------------------------------------------------------------------
+
+ 单词统计
+ textFile.flatMap(line => line.split(" ")).map(word => (word,1)).reduceByKey((a,b) => a+b)
+
+
+
+ .flatMap:是先map 再flatten 
+ .map: Builds a new collection by applying a function to all elements of this list.
+ .flatten:Builds a new collection by applying a function to all elements of this list and using the elements of the resulting collections.
+	 val xs = List(
+	           Set(1, 2, 3),
+	           Set(1, 2, 3)
+	         ).flatten
+	// xs == List(1, 2, 3, 1, 2, 3)
+
+	val ys = Set(
+	           List(1, 2, 3),
+	           List(3, 2, 1)
+	         ).flatten
+	// ys == Set(1, 2, 3)
+ ----------------------------------------------------------------------------------------------
+
+
+
+ ----------------------------------------------------------------------------------------------
+ 创建RDD (加载外部数据集和在驱动程序中平行化集合)
+ 1.
+ sc.parallelize(List("A","b"))
+ 
+ 2.
+	  val conf = new SparkConf
+	  conf.setAppName("快速开始10").setMaster("spark://S20:7077")
+	  conf.setJars(Array("/Users/hadoop/workspace/bigdata/all_frame_intellij/Spark1.6.0-practice-maven/target/Spark1.6.0-practice-maven-1.0.jar"))
+
+	  val sc = new SparkContext(conf)
+	  val textFile = sc.textFile("hdfs://S20:9000/library/wordcount/input/Data/wordCount.txt",1)
+
+
+ 
