@@ -1,0 +1,57 @@
+spark-笔记-03-RDD.txt
+
+-------------------------------------------------------
+RDD
+
+DataFrame(以后研究)
+
+-------------------------------------------------------
+Spark 弹性
+-------------------------------------------------------
+弹性之一：自动进行内存和磁盘数据存储的切换
+	spark 数据存储优先考虑内存，如果内存放不下，自动放到磁盘
+弹性之二：基于Lineage的高校容错
+弹性之三：Task如果失败会自动进行特定次数的重试
+弹性之四：Stage如果失败会自动进行特定次数的重试(如果阶段计算失败，只重新计算失败的数据分片)
+弹性之五：
+  
+-------------------------------------------------------
+.)spark的中间数据，可以同时存在于内存和磁盘
+
+spark  缓存: 
+-------------------------------------------------------
+.) 计算hoa时
+.)计算链条很长
+.)shuffle之后 checkpoint
+
+
+	sc.textFile("/library/wordcount/input/Data").flatMap(_.split(" ")).map(word => (word,1)).reduceByKey(_+_).saveAsTextFile("/library/wordcount/output/spark_word_count")
+
+	sc.textFile("/library/wordcount/input/Data").flatMap(_.split(" ")).map(word => (word,1)).reduceByKey(_+_).repartition(1).saveAsTextFile("/library/wordcount/output/spark_word_count")
+
+
+	sc.textFile("/library/wordcount/input/Data").flatMap(_.split(" ")).map(word => (word,1)).reduceByKey(_+_).map(pair => (pair._2,pair._1)).sortByKey(false).map(pair => (pair._2,pair._1)).saveAsTextFile("/library/wordcount/output/spark_word_count")
+
+//从HDFS中读取文件数据作为RDD处理
+val data = sc.textFile("/library/wordcount/input/Data)
+
+/**
+*重组RDD结构，变成第行只包含一个单词
+*   把原单词按空格拆分，其中flatMap分为两步，第一步先把原数据行按空格分隔成集合map，按(k,v)结构保存数据
+*
+*/
+val dataSplit = data.flatMap(_.split(" "))
+val dataMap = dataSplit.map(word => (word,1))
+val result = dataMap.reduceByKey(_+_)
+
+
+.)从HDFS中读取文件数据作为RDD处理
+	val data = sc.textFile("/library/wordcount/input/Data)
+
+1，通过集合创建RDD的实际意义：测试！
+
+2，使用本地文件系统创建RDD的作用，测试大量数据的文件
+
+3，使用HDFS来创建RDD 生产环境最常用的RDD创建方式、
+
+
